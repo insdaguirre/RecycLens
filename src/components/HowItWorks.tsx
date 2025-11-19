@@ -1,4 +1,3 @@
-import React from 'react';
 import { Camera, MapPin, FileText, Sparkles, Map } from 'lucide-react';
 
 interface HowItWorksProps {

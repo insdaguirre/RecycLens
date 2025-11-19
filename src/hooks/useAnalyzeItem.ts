@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { analyzeItem } from '../utils/api';
-import type { AnalyzeRequest, AnalyzeResponse, AnalyzeState } from '../types/recycleiq';
+import type { AnalyzeRequest, AnalyzeState } from '../types/recycleiq';
 
 export function useAnalyzeItem() {
   const [state, setState] = useState<AnalyzeState>({

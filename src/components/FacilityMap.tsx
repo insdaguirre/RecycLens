@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Map, { Marker, Popup } from 'react-map-gl';
 import type { Facility } from '../types/recycleiq';
 import { geocodeAddress } from '../utils/geocoding';

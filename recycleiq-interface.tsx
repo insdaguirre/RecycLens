@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { MapPin, Camera, Upload, Check, X, Navigation, Info, Scan, Map, Loader2 } from 'lucide-react';
+import { useState } from 'react';
+import { MapPin, Camera, Check, Info, Scan, Map, Loader2 } from 'lucide-react';
 import { useAnalyzeItem } from './src/hooks/useAnalyzeItem';
 import ImageUpload from './src/components/ImageUpload';
 import ResultsPanel from './src/components/ResultsPanel';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { ExternalLink, MapPin } from 'lucide-react';
 import type { Facility } from '../types/recycleiq';
 
