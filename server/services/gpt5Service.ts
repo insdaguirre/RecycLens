@@ -184,7 +184,7 @@ Search for queries like "recycling facilities ${location}" or "${visionResult.pr
     
     // Call Responses API with web_search tool
     const response = await openai.responses.create({
-      model: 'gpt-4o', // or 'gpt-5' if available
+      model: 'gpt-4.1-2025-04-14',
       tools: tools,
       input: input,
     });

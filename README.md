@@ -14,7 +14,7 @@ An AI-powered recycling assistant that helps users identify recyclable items and
 
 - **Frontend**: React + TypeScript + Vite + Tailwind CSS
 - **Backend**: Node.js + Express + TypeScript
-- **AI Services**: OpenAI Vision API (GPT-4o) + OpenAI Responses API (GPT-4o with web search)
+- **AI Services**: OpenAI Responses API (GPT-4.1) for image analysis + OpenAI Responses API (GPT-4.1 with web search) for recyclability
 - **Maps**: Mapbox GL JS + React Map GL + Mapbox Geocoding API
 
 ## Prerequisites
@@ -111,8 +111,8 @@ flowchart TD
     end
     
     subgraph OpenAI["OpenAI API Services"]
-        VisionAPI["GPT-4o Vision API<br/>• Image Analysis<br/>• Material ID<br/>• Condition Assessment<br/>• Contaminant Detection"]
-        ResponsesAPI["GPT-4o Responses API<br/>• Recyclability Decision<br/>• Disposal Instructions<br/>• Facility Lookup"]
+        VisionAPI["GPT-4.1 Responses API<br/>• Image Analysis<br/>• Material ID<br/>• Condition Assessment<br/>• Contaminant Detection"]
+        ResponsesAPI["GPT-4.1 Responses API<br/>• Recyclability Decision<br/>• Disposal Instructions<br/>• Facility Lookup"]
         WebSearch["Web Search Tool<br/>(OpenAI Responses)<br/>• Find facilities<br/>• Local regulations"]
     end
     
@@ -161,12 +161,12 @@ flowchart TD
 ### Process Flow
 
 1. **User Input**: User uploads an image, enters location, and optionally adds context
-2. **Image Analysis**: Vision API (GPT-4o) analyzes the image to identify:
+2. **Image Analysis**: GPT-4.1 Responses API analyzes the image to identify:
    - Primary and secondary materials
    - Item condition (clean, soiled, damaged, etc.)
    - Contaminants (food residue, grease, etc.)
    - Material category
-3. **Recyclability Assessment**: GPT-4o Responses API receives:
+3. **Recyclability Assessment**: GPT-4.1 Responses API receives:
    - Vision analysis results
    - User location
    - Optional user context
@@ -282,7 +282,7 @@ RecycLens/
 ### API errors
 
 - Verify your OpenAI API key is valid and has credits
-- Check that you have access to Vision API (GPT-4o) and Responses API (GPT-4o with web search)
+- Check that you have access to Responses API (GPT-4.1) with image support and web search tool
 - Review server logs for detailed error messages
 - Ensure your OpenAI account has access to the web search tool
 
@@ -304,8 +304,8 @@ RecycLens/
 
 - **Backend Architecture**: Express server serves both API routes and static frontend files in production
 - **AI Integration**: 
-  - Vision API (GPT-4o) handles image analysis for material identification
-  - Responses API (GPT-4o) with `web_search` tool handles recyclability decisions and facility lookup
+  - GPT-4.1 Responses API handles image analysis for material identification
+  - GPT-4.1 Responses API with `web_search` tool handles recyclability decisions and facility lookup
 - **Frontend**: 
   - Development: Vite dev server with proxy to backend
   - Production: Built static files served by Express
