@@ -20,7 +20,7 @@ export async function analyzeImage(imageBase64: string): Promise<VisionResponse>
   try {
     const openai = getOpenAIClient();
     const response = await openai.chat.completions.create({
-      model: 'gpt-4.1-2025-04-14',
+      model: 'gpt-4.1',
       messages: [
         {
           role: 'system',
