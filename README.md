@@ -9,52 +9,60 @@ An AI-powered recycling assistant that helps users identify recyclable items and
 - **Local Facilities**: Find nearby recycling and disposal facilities using web search
 - **Interactive Map**: View facilities on an interactive Mapbox map with markers
 - **Clear Instructions**: Receive step-by-step guidance for proper disposal
+- **Staged Progress Updates**: Real-time feedback during analysis (image analysis → recyclability → geocoding)
 
 ## Tech Stack
 
-- **Frontend**: React + TypeScript + Vite + Tailwind CSS
+- **Frontend**: Shiny (Python) web framework
 - **Backend**: Node.js + Express + TypeScript
 - **AI Services**: OpenAI Responses API (GPT-4.1) for image analysis + OpenAI Responses API (GPT-4.1 with web search) for recyclability
-- **Maps**: Mapbox GL JS + React Map GL + Mapbox Geocoding API
+- **Maps**: Mapbox GL JS + Mapbox Geocoding API
 
 ## Prerequisites
 
-- Node.js 18+ and npm
+- Python 3.8+
+- Node.js 18+ and npm (for backend server)
 - OpenAI API key ([Get one here](https://platform.openai.com/api-keys))
-- Mapbox access token ([Get one here](https://account.mapbox.com/access-tokens/)) - Required for map functionality
+- Mapbox access token ([Get one here](https://account.mapbox.com/access-tokens/)) - Optional, for map functionality
 
 ## Setup
 
-### 1. Install Dependencies
+### 1. Install Backend Dependencies
 
 ```bash
 npm install
 ```
 
-### 2. Configure Environment Variables
-
-Copy `.env.example` to `.env`:
+### 2. Install Python Dependencies
 
 ```bash
-cp .env.example .env
+cd app
+pip install -r requirements.txt
+cd ..
 ```
 
-Edit `.env` and add your API keys:
+### 3. Configure Environment Variables
 
-```
+Create a `.env` file in the project root for the backend:
+
+```bash
 OPENAI_API_KEY=sk-your-actual-api-key-here
-VITE_MAPBOX_ACCESS_TOKEN=pk.your-mapbox-token-here
 PORT=3001
 NODE_ENV=development
 ```
 
-**Note:** The Mapbox token uses the `VITE_` prefix because Vite requires this for frontend environment variables.
+Create a `.env` file in the `app/` directory for the Shiny frontend:
 
-**Note:** The Mapbox access token is required for the interactive map feature. Without it, the map will not display, but other features will still work.
+```bash
+BACKEND_URL=http://localhost:3001
+MAPBOX_ACCESS_TOKEN=pk.your-mapbox-token-here
+```
 
-### 3. Run Development Servers
+**Note:** The Mapbox access token is optional. Without it, the map will not display, but other features will still work.
 
-You need to run both the frontend and backend servers:
+### 4. Run the Application
+
+You need to run both the backend server and the Shiny frontend:
 
 **Terminal 1 - Backend Server:**
 ```bash
@@ -63,134 +71,116 @@ npm run server
 
 The backend will start on `http://localhost:3001`
 
-**Terminal 2 - Frontend Server:**
+**Terminal 2 - Shiny Frontend:**
 ```bash
-npm run dev
+cd app
+shiny run app.py
 ```
 
-The frontend will start on `http://localhost:5173` (or another port if 5173 is taken)
+Or using Python directly:
+```bash
+cd app
+python -m shiny run app.py
+```
 
-### 4. Open in Browser
-
-Navigate to `http://localhost:5173` to use the application.
-
-## Deployment
-
-### Railway Deployment
-
-RecycLens is configured for easy deployment on Railway.
-
-**Quick Steps:**
-1. Connect your GitHub repository to Railway
-2. Add environment variables:
-   - `OPENAI_API_KEY` - Your OpenAI API key
-   - `VITE_MAPBOX_ACCESS_TOKEN` - Your Mapbox access token
-   - `NODE_ENV=production` - Set to production mode
-3. Railway will automatically build and deploy using the `railway.json` configuration
-
-The application will be available at a Railway-provided URL (e.g., `https://your-app.railway.app`).
-
-**Note:** Railway automatically sets the `PORT` environment variable, so you don't need to configure it manually.
+The Shiny app will start and display a URL (typically `http://127.0.0.1:8000`). Open this URL in your browser.
 
 ## How It Works
 
-### System Architecture & Information Flow
+### System Architecture
 
-```mermaid
-flowchart TD
-    subgraph UI["User Interface (React + Vite + Tailwind CSS)"]
-        Location["Location Input"]
-        Image["Image Upload"]
-        Context["Context (Optional)"]
-    end
-    
-    subgraph Backend["Express Backend Server (Node.js + TypeScript)"]
-        Handler["POST /api/analyze Handler<br/>(server/routes/analyze.ts)"]
-        VisionService["Vision Service<br/>(visionService.ts)"]
-        ResponsesService["Responses Service<br/>(gpt5Service.ts)"]
-    end
-    
-    subgraph OpenAI["OpenAI API Services"]
-        VisionAPI["GPT-4.1 Responses API<br/>• Image Analysis<br/>• Material ID<br/>• Condition Assessment<br/>• Contaminant Detection"]
-        ResponsesAPI["GPT-4.1 Responses API<br/>• Recyclability Decision<br/>• Disposal Instructions<br/>• Facility Lookup"]
-        WebSearch["Web Search Tool<br/>(OpenAI Responses)<br/>• Find facilities<br/>• Local regulations"]
-    end
-    
-    subgraph Processing["Response Processing"]
-        Combine["Combine Vision + Responses API Results<br/>• isRecyclable (boolean)<br/>• category, bin, confidence<br/>• step-by-step instructions<br/>• facilities[]"]
-    end
-    
-    subgraph Display["Frontend Display"]
-        ResultsPanel["Results Panel<br/>• Recyclability<br/>• Instructions<br/>• Reasoning"]
-        FacilityMap["Facility Map (Mapbox GL)<br/>• Markers<br/>• Geocoding"]
-        FacilityCards["Facility Cards<br/>• Name, Address<br/>• Type, Notes<br/>• External Link"]
-    end
-    
-    subgraph Mapbox["Mapbox Services"]
-        Geocoding["Geocoding API<br/>(Address → Coordinates)"]
-    end
-    
-    Location --> Handler
-    Image --> Handler
-    Context --> Handler
-    
-    Handler --> VisionService
-    Handler --> ResponsesService
-    
-    VisionService --> VisionAPI
-    ResponsesService --> ResponsesAPI
-    ResponsesAPI --> WebSearch
-    
-    VisionAPI --> Combine
-    ResponsesAPI --> Combine
-    
-    Combine --> ResultsPanel
-    Combine --> FacilityMap
-    Combine --> FacilityCards
-    
-    FacilityMap --> Geocoding
-    
-    style UI fill:#e1f5e1
-    style Backend fill:#e3f2fd
-    style OpenAI fill:#fff3e0
-    style Processing fill:#f3e5f5
-    style Display fill:#e8f5e9
-    style Mapbox fill:#e0f2f1
-```
+The Shiny frontend communicates with a Node.js backend API that handles AI processing:
 
-### Process Flow
-
-1. **User Input**: User uploads an image, enters location, and optionally adds context
-2. **Image Analysis**: GPT-4.1 Responses API analyzes the image to identify:
+1. **User Input**: User uploads an image, enters location, and optionally adds context via the Shiny UI
+2. **Image Analysis**: Backend calls GPT-4.1 Responses API to analyze the image and identify:
    - Primary and secondary materials
    - Item condition (clean, soiled, damaged, etc.)
    - Contaminants (food residue, grease, etc.)
    - Material category
-3. **Recyclability Assessment**: GPT-4.1 Responses API receives:
-   - Vision analysis results
-   - User location
-   - Optional user context
-   - Uses web search tool to:
-     - Determine recyclability based on local regulations
-     - Find nearby recycling/disposal facilities
-     - Generate step-by-step disposal instructions
-4. **Geocoding**: Mapbox Geocoding API converts facility addresses to coordinates
-5. **Results Display**: Frontend displays:
+3. **Recyclability Assessment**: Backend calls GPT-4.1 Responses API with web search to:
+   - Determine recyclability based on local regulations
+   - Find nearby recycling/disposal facilities
+   - Generate step-by-step disposal instructions
+4. **Geocoding**: Frontend geocodes facility addresses using Mapbox Geocoding API
+5. **Results Display**: Shiny app displays:
    - Recyclability decision with confidence score
    - Disposal instructions
    - Interactive map with facility markers
    - Facility cards with details and links
 
+### Staged Progress Updates
+
+The app provides real-time feedback during analysis:
+
+- **Stage 1**: "Identifying what's in the image..." - Vision API call
+- **Stage 2**: "Determining if it can be recycled..." - Recyclability API call
+- **Stage 3**: "Finding places to recycle..." - Geocoding and map rendering
+
+## Project Structure
+
+```
+RecycLens/
+├── app/                    # Shiny frontend application
+│   ├── app.py             # Main Shiny application
+│   ├── requirements.txt   # Python dependencies
+│   ├── README.md          # Shiny app documentation
+│   ├── static/            # Static assets
+│   │   └── styles.css     # Custom CSS styling
+│   └── utils/             # Utility functions
+│       ├── __init__.py
+│       └── api_client.py  # API call functions
+├── server/                # Backend Express server
+│   ├── index.ts          # Server entry point
+│   ├── routes/           # API routes
+│   │   └── analyze.ts    # Main analysis endpoint
+│   ├── services/         # Business logic
+│   │   ├── visionService.ts    # Vision API integration
+│   │   └── gpt5Service.ts      # Responses API integration
+│   └── types.ts          # Backend types
+├── package.json          # Backend Node.js dependencies
+├── tsconfig.json         # TypeScript configuration
+└── tsconfig.server.json  # Server TypeScript configuration
+```
+
 ## API Endpoints
 
-### POST /api/analyze
+The backend provides the following endpoints:
 
-Analyzes an item for recyclability.
+### POST /api/analyze/vision
+
+Analyzes an image to identify materials.
 
 **Request Body:**
 ```json
 {
-  "image": "data:image/jpeg;base64,...",
+  "image": "data:image/jpeg;base64,..."
+}
+```
+
+**Response:**
+```json
+{
+  "stage": "vision",
+  "result": {
+    "primaryMaterial": "Plastic",
+    "secondaryMaterials": [],
+    "category": "Container",
+    "condition": "clean",
+    "contaminants": [],
+    "confidence": 0.95,
+    "shortDescription": "Plastic bottle"
+  }
+}
+```
+
+### POST /api/analyze/recyclability
+
+Determines recyclability and finds facilities.
+
+**Request Body:**
+```json
+{
+  "visionResult": { ... },
   "location": "Ithaca, NY 14850",
   "context": "Plastic container with food residue"
 }
@@ -199,123 +189,74 @@ Analyzes an item for recyclability.
 **Response:**
 ```json
 {
-  "isRecyclable": true,
-  "category": "Plastic",
-  "bin": "recycling",
-  "confidence": 0.87,
-  "materialDescription": "Plastic bottle",
-  "instructions": [
-    "Rinse the container thoroughly",
-    "Remove any labels if possible",
-    "Place in recycling bin"
-  ],
-  "reasoning": "This is a clean plastic container that can be recycled.",
-  "locationUsed": "Ithaca, NY 14850",
-  "facilities": [
-    {
-      "name": "Green Valley Recycling",
-      "type": "Recycling Center",
-      "address": "123 Main St, Ithaca, NY",
-      "url": "https://example.com",
-      "notes": "Accepts plastic containers"
-    }
-  ]
+  "stage": "recyclability",
+  "result": {
+    "isRecyclable": true,
+    "category": "Plastic",
+    "bin": "recycling",
+    "confidence": 0.87,
+    "materialDescription": "Plastic bottle",
+    "instructions": [
+      "Rinse the container thoroughly",
+      "Remove any labels if possible",
+      "Place in recycling bin"
+    ],
+    "reasoning": "This is a clean plastic container that can be recycled.",
+    "locationUsed": "Ithaca, NY 14850",
+    "facilities": [
+      {
+        "name": "Green Valley Recycling",
+        "type": "Recycling Center",
+        "address": "123 Main St, Ithaca, NY",
+        "url": "https://example.com",
+        "notes": "Accepts plastic containers"
+      }
+    ]
+  }
 }
-```
-
-## Example cURL Request
-
-```bash
-curl -X POST http://localhost:3001/api/analyze \
-  -H "Content-Type: application/json" \
-  -d '{
-    "image": "data:image/jpeg;base64,/9j/4AAQSkZJRg...",
-    "location": "Ithaca, NY 14850",
-    "context": "Plastic bottle"
-  }'
-```
-
-## Project Structure
-
-```
-RecycLens/
-├── server/                 # Backend Express server
-│   ├── index.ts           # Server entry point
-│   ├── routes/            # API routes
-│   │   └── analyze.ts     # Main analysis endpoint
-│   ├── services/          # Business logic
-│   │   ├── visionService.ts    # Vision API integration
-│   │   └── gpt5Service.ts      # Responses API integration
-│   └── types.ts           # Backend types
-├── src/                    # Frontend React app
-│   ├── components/        # React components
-│   │   ├── ImageUpload.tsx
-│   │   ├── ResultsPanel.tsx
-│   │   ├── FacilityCard.tsx
-│   │   └── FacilityMap.tsx
-│   ├── hooks/             # Custom React hooks
-│   │   └── useAnalyzeItem.ts
-│   ├── utils/             # Utility functions
-│   │   ├── api.ts         # API client
-│   │   └── geocoding.ts   # Mapbox geocoding utility
-│   └── types/             # TypeScript types
-│       └── recycleiq.ts
-├── recycleiq-interface.tsx # Main UI component
-├── vite.config.ts         # Vite configuration
-└── package.json
 ```
 
 ## Troubleshooting
 
 ### Backend won't start
 
-- Check that `OPENAI_API_KEY` is set in `.env`
+- Check that `OPENAI_API_KEY` is set in `.env` (project root)
 - Ensure port 3001 is not in use
 - Check console for error messages
 
-### Frontend can't connect to backend
+### Shiny app can't connect to backend
 
-- Ensure backend server is running on port 3001
-- Check Vite proxy configuration in `vite.config.ts`
-- Verify CORS is enabled in backend
-
-### API errors
-
-- Verify your OpenAI API key is valid and has credits
-- Check that you have access to Responses API (GPT-4.1) for both image analysis and recyclability with web search tool
-- Review server logs for detailed error messages
-- Ensure your OpenAI account has access to the web search tool
-
-### Image upload issues
-
-- Ensure image is less than 10MB
-- Supported formats: JPEG, PNG, GIF, WebP
-- Check browser console for errors
+- Ensure the backend server is running on port 3001
+- Check that `BACKEND_URL` in `app/.env` matches the backend server URL
+- Verify the backend is accessible at the specified URL
 
 ### Map not displaying
 
-- Verify `VITE_MAPBOX_ACCESS_TOKEN` is set in `.env` (frontend needs this, note the VITE_ prefix)
-- Check browser console for Mapbox-related errors
-- Ensure the token has the correct scopes (Geocoding API and Maps API)
-- Map will only display when facilities are available
-- Restart the dev server after adding the environment variable
+- Verify `MAPBOX_ACCESS_TOKEN` is set in `app/.env`
+- Check that the token is valid and has the necessary permissions
+- Check browser console for JavaScript errors
 
-## Development Notes
+### Image upload issues
 
-- **Backend Architecture**: Express server serves both API routes and static frontend files in production
-- **AI Integration**: 
-  - GPT-4.1 Responses API handles image analysis for material identification
-  - GPT-4.1 Responses API with `web_search` tool handles recyclability decisions and facility lookup
-- **Frontend**: 
-  - Development: Vite dev server with proxy to backend
-  - Production: Built static files served by Express
-- **Maps**: Mapbox GL JS for interactive maps, Mapbox Geocoding API for address-to-coordinates conversion
-- **Environment Variables**: 
-  - `OPENAI_API_KEY`: Required for both Vision and Responses API
-  - `VITE_MAPBOX_ACCESS_TOKEN`: Required for map display (note the `VITE_` prefix for frontend access)
-  - `PORT`: Automatically set by Railway in production
+- Ensure the image file is a valid image format (JPEG, PNG, GIF, WebP)
+- Check that the file size is reasonable (backend may have limits)
+- Verify the backend server is running and accessible
+
+## Development
+
+### Backend Development
+
+- Edit files in `server/` directory
+- Restart the backend server to see changes
+- Backend uses TypeScript - compile with `npm run build:server`
+
+### Shiny Frontend Development
+
+- Edit `app/app.py` for main application logic
+- Edit `app/utils/api_client.py` for API call logic
+- Edit `app/static/styles.css` for styling
+- Restart the Shiny app to see changes
 
 ## License
 
 © 2025 RecycLens. Making recycling simple.
-
