@@ -6,6 +6,7 @@ import ResultsPanel from './src/components/ResultsPanel';
 import FacilityCard from './src/components/FacilityCard';
 import FacilityMap from './src/components/FacilityMap';
 import HowItWorks from './src/components/HowItWorks';
+import LocationAutocomplete from './src/components/LocationAutocomplete';
 
 const RecycLens = () => {
   const [currentPage, setCurrentPage] = useState<'home' | 'how-it-works'>('home');
@@ -125,22 +126,13 @@ const RecycLens = () => {
               ? 'w-[40%]' // 40% width when results show
               : 'max-w-2xl mx-auto' // Centered with same max-width as subtitle
           }`}>
-            {/* Location Input */}
-            <div className="mb-6">
-              <label className="text-sm font-medium text-gray-700 mb-2 block">
-                Location <span className="text-red-500">*</span>
-              </label>
-              <div className="relative">
-                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Enter your city or ZIP code"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-gray-900"
-                />
-              </div>
-            </div>
+            {/* Location Input with Autocomplete */}
+            <LocationAutocomplete
+              value={location}
+              onChange={setLocation}
+              placeholder="Enter your city or ZIP code"
+              required={true}
+            />
 
             {/* Context Input */}
             <div className="mb-6">
