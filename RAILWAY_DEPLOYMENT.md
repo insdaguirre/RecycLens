@@ -36,6 +36,7 @@ The application consists of two services:
 - Click on the service → "Variables" tab
 - Add the following:
   - `OPENAI_API_KEY` = `sk-your-actual-api-key-here` (REQUIRED)
+  - `RAG_SERVICE_URL` = (Set after creating RAG service - see step 4)
   - `NODE_ENV` = `production`
   - `PORT` = (Leave empty - Railway auto-assigns)
 
@@ -67,7 +68,27 @@ The application consists of two services:
 3. Copy the public domain (e.g., `https://your-backend-service.railway.app`)
 4. Use this as your `BACKEND_URL` in the frontend service
 
-### 4. Configure Service Networking
+### 4. Create RAG Service
+
+1. In the same Railway project, click "New Service" again
+2. Select "GitHub Repo" and choose the same repository
+3. **Important**: Set the root directory to `/rag_service`
+   - Click on the service → Settings → Root Directory → Set to `rag_service`
+4. Railway should auto-detect it as a Python service
+
+**Configure Environment Variables:**
+- Click on the service → "Variables" tab
+- Add the following:
+  - `OPENAI_API_KEY` = `sk-your-actual-api-key-here` (OPTIONAL - only if needed for embeddings)
+  - `PORT` = (Leave empty - Railway auto-assigns)
+
+**Get RAG Service URL:**
+1. Go to your RAG service
+2. Click on "Settings" → "Networking"
+3. Copy the public domain (e.g., `https://rag-service.railway.app`)
+4. Use this as your `RAG_SERVICE_URL` in the backend service (update backend environment variables)
+
+### 5. Configure Service Networking
 
 **For Frontend to Backend Communication:**
 
@@ -83,7 +104,7 @@ The frontend needs to know the backend URL. You have two options:
 - Railway provides service references like `${{backend.RAILWAY_PUBLIC_DOMAIN}}`
 - However, this may require Railway Pro plan
 
-### 5. Deploy and Verify
+### 6. Deploy and Verify
 
 1. Both services will automatically deploy when you push to GitHub
 2. Or manually trigger deployment by clicking "Deploy" in each service
@@ -101,7 +122,13 @@ The frontend needs to know the backend URL. You have two options:
 - Visit the URL in your browser
 - You should see the RecycLens application
 
-### 6. Test the Application
+**Verify RAG Service:**
+- Go to RAG service → "Settings" → "Networking"
+- Copy the public domain
+- Visit `https://your-rag-service.railway.app/health`
+- Should return: `{"status":"ok","service":"rag-service",...}`
+
+### 7. Test the Application
 
 1. Open the frontend URL in your browser
 2. Upload an image
@@ -137,6 +164,8 @@ The frontend needs to know the backend URL. You have two options:
 
 ### Backend Service
 - `OPENAI_API_KEY` (required) - Your OpenAI API key
+- `RAG_SERVICE_URL` (optional) - URL of RAG service (e.g., `https://rag-service.railway.app`)
+  - If not set, RAG queries will be skipped (graceful degradation)
 - `NODE_ENV` = `production` (optional but recommended)
 - `PORT` - Auto-assigned by Railway
 
@@ -145,10 +174,16 @@ The frontend needs to know the backend URL. You have two options:
 - `MAPBOX_ACCESS_TOKEN` (optional) - For map functionality
 - `PORT` - Auto-assigned by Railway
 
+### RAG Service
+- `OPENAI_API_KEY` (optional) - For embeddings if needed by llama-index
+- `PORT` - Auto-assigned by Railway
+
 ## Files Created for Deployment
 
 - `railway.json` (root) - Backend service configuration
 - `app/railway.json` - Frontend service configuration
+- `rag_service/railway.json` - RAG service configuration
+- `rag_service/Procfile` - Process file for RAG service
 - `app/nixpacks.toml` - Alternative build configuration for frontend
 - `app/Procfile` - Process file for frontend (alternative)
 

@@ -1,5 +1,6 @@
 import OpenAI from 'openai';
 import type { VisionResponse, AnalyzeResponse, Facility } from '../types.js';
+import { queryRAG } from './ragService.js';
 
 // Lazy initialization of OpenAI client
 function getOpenAIClient() {
@@ -129,6 +130,27 @@ export async function analyzeRecyclability(
       userLocation.country = parsedLocation.country;
     }
     
+    // Query RAG service for local regulations
+    let ragContext = '';
+    try {
+      const ragResult = await queryRAG(
+        visionResult.primaryMaterial,
+        location,
+        visionResult.condition,
+        context
+      );
+      
+      if (ragResult && ragResult.regulations) {
+        ragContext = ragResult.regulations;
+        console.log('RAG query successful, regulations retrieved');
+      } else {
+        console.log('RAG query returned no results or service unavailable');
+      }
+    } catch (error) {
+      console.error('RAG query error (non-fatal):', error);
+      // Continue without RAG context
+    }
+    
     // Prepare the input prompt
     const input = `You are a recycling and disposal assistant. Analyze this item for recyclability:
 
@@ -142,6 +164,8 @@ Material Analysis:
 User Context: ${context || 'None provided'}
 
 User Location: ${location}
+
+${ragContext ? `\nLocal Recycling Regulations (from official sources):\n${ragContext}\n\nUse these official regulations as the primary source for determining recyclability and disposal instructions.` : ''}
 
 Please:
 1. Determine if this item is recyclable (true/false)

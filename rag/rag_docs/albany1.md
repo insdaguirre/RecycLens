@@ -1,0 +1,219 @@
+---
+county: albany
+state: NY
+content_type: html
+source_url: https://www.albanynyrecycles.com/rescom-recycling
+---
+
+            
+
+
+
+Albany Recycles Residential Commercial | Albany Recycles
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+HOME
+
+PROGRAMS
+
+
+GARBAGE COLLECTION
+
+
+RESIDENTIAL-COMMERCIAL RECYCLING
+
+
+HAZARDOUS WASTE/ELECTRONICS
+
+
+PAPER SHREDDING
+
+
+YARDWASTE COLLECTION
+
+
+COMPOST FACILITY
+
+
+ELECTRONICS RECYCLING
+
+
+
+ALBANY COMPOSTS
+
+
+HOW CAN I PARTICIPATE?
+
+
+HOW TO USE THE EARTH MACHINE COMPOSTER
+
+
+FULL SERVICE FOOD SCRAP COLLECTION
+
+
+HOW TO BACKYARD COMPOST
+
+
+FOOD COMPOSTING FAQ'S
+
+
+BACKYARD COMPOSTING REPORTING
+
+
+COMPOST CARE PROGRAM
+
+
+FOOD WASTE SMART BINS
+
+
+COMPOSTING VIDEOS
+
+
+
+ALBANY REUSES
+
+
+DROP IT SWAP IT
+
+
+DIY PROJECTS
+
+
+
+DOWNLOADS/LINKS
+
+
+HOLIDAY RECYCLING
+
+
+
+CONTACT US
+ 
+
+
+
+
+
+
+
+
+
+
+Residential and Commercial Recycling... 
+
+RESIDENTIAL CURBSIDE RECYLING
+
+
+
+
+
+
+
+The City of Albany provides curbside recycling collection to residents (dwellings with four (4) units or less located on a single property). Recycling should be placed curbside prior to 12:01 am on the scheduled collection day, but not before 4:30 p.m. of the prior day. Recycling Bins/Recycling carts are FREE of charge. All recycling can be placed loosely in your bin. There is no need to sort your recyclables! ​
+
+
+
+ To get your recycle bin/cart contact:Department of General Services at1 Richard J. Conners Blvd, Albany NY 12204(518) 427-7480Monday through Friday 8:00 am to 5:00 pm   
+
+
+
+ACCEPTABLE MATERIALS
+
+
+
+Plastic Containers Numbers 1 - 7• Soda Bottles• Milk & Water Jugs• Windshield Washer Jugs• Mustard & Ketchup Bottles• Beverage Containers • Butter & Yogurt Containers • Prescription Pill Bottles• Soap & Detergent Bottles• Mouthwash Bottles• Salad Dressing Bottles• Peanut Butter Jars• Flower Pots & Containers• Plastic Drinking Cup• Plastic Food Containers • Pancake Syrup Bottles
+
+Food & Beverage Cartons• Milk Cartons• Juice Cartons & Boxes• Paperboard Egg Cartons• Frozen Food Cartons
+
+Metal & Aluminum• Food & Beverage Cans (inc. metal lids)• Deposit Cans• “Tin” Cans & Containers• Spray Cans (e.g. cooking or hair spray)• Aluminum Foil (e.g. pie plates, foil trays)
+
+Glass Containers PaperGreen, Blue, Brown, & Clear• Food and Beverage Containers• Liquor & Wine Bottles• Deposit Bottles• Canning & Food Jars
+
+Paper Products (books/magazines)• Newspapers & Inserts• Magazines & Catalogs• Phone Books• Paperback Books• Soft-covered Workbooks• Brown Grocery Bags
+
+Corrugated CardboardLightweight Cardboard• Dry Food Boxes   (Cereal, Cookie, Snack, etc.)• Microwave Containers• Non-Food Boxes   (e.g. health care, gift)• Toilet & Paper Towel Tubes
+
+ Junk Mail• Cards & Envelopes   (plastic windows do not need to be            removed)• Letters & Enclosures
+
+Paper (loose)• Notebook Paper • School Papers• White & Colored Ledger Paper• Computer & Fax Paper• Shredded Paper (Place in a clear plastic bag)Note: There is no need to remove staples from paper prior to recycling.
+
+
+
+
+
+
+
+NOT ACCEPTABLE MATERIALS
+
+
+
+Broken GlassOvenware & CeramicsWindow PanesMirrorsWindshieldsMercury-filled Light Bulbs* (i.e. fluorescent bulbs)Incandesent BulbsCups, Drinking GlassesDishes/Plates, TablewareCarbon PaperWax-Coated CardboardDiapersPlastic Bags (e.g. grocery bags, snack bags, plastic wrappings)Clothes HangersStyrofoam (e.g. trays, blocks, packing peanuts)FurnitureClothes & ShoesNeedles & Syringes*Six-pack Holders
+
+​ToysCaps & LidsPlexiglassStraws & WrappersNapkins & Paper TowelsPaper PlatesTissues & Tissue PaperPizza BoxesChips/Pretzel BagsScrap MetalSilverwareSmall Appliances (e.g. toaster, blender)Paint Cans*Spray Cans* (e.g. paint cans*,insecticides*)Pesticides & Chemicals*Gasoline & Motor Oil Bottles*Compost & Yard WasteFood & Trash
+
+
+
+
+
+* These items must be disposed of through the City of Albany Household Hazardous Waste Progam
+
+
+
+COMMERCIAL, INDUSTRIAL & MIXED-OCCUPANCY (NON-RESIDENTIAL) COLLECTIONThe City of Albany finds the reduction of solid waste and the conservation of recyclables to be of great importance and the responsibility of public and private sectors alike. Therefore, the separation and collection of materials for recycling from all establishments within the City is mandated within City Code.All commercial, industrial, mixed-occupancy, multi-residential and institutional establishments within the City must arrange, maintain and contract for PRIVATE collection of their trash and recyclable items (paper, newspaper, cardboard, glass, cans and plastic containers). Commercial Recycling Quick ReferenceMULTI-RESIDENTIAL The owner, manager or superintendent of every multi-residential complex (more than (4) units) is responsible to provide, maintain and arrange for the PRIVATE collection of recyclable items (paper, newspaper, cardboard, glass, cans, and plastic containers) that are generated by residents of the complex. In cases where a condominium, cooperative, homeowner or similar association exists, the association shall be responsible for provision and maintenance of the recycling collection areas.IF recycling is NOT offered in your complex or mixed-use establishment, please contact DGS at (518) 434-2489 or email us here
+
+
+
+HOLIDAYS Reuse or recycle your Holiday Decorations. Click here for TIPS and INFORMATIONAll holidays will have normal trash and recycling pickup.  CONTACT INFO: Department of General Services, 1 Richard J. Conners Blvd., Albany, New York 12204 Phone: (518) 427-7480     Email Albany Recycles
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
