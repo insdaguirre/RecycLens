@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { analyzeVision, analyzeRecyclability } from '../utils/api';
-import type { AnalyzeRequest, AnalyzeState, AnalysisStage } from '../types/recycleiq';
+import type { AnalyzeRequest, AnalyzeState, AnalysisStage, VisionResponse } from '../types/recycleiq';
 
 export function useAnalyzeItem() {
   const [state, setState] = useState<AnalyzeState>({
@@ -15,12 +15,16 @@ export function useAnalyzeItem() {
       loading: true,
       error: null,
       data: null,
-      stage: 'analyzing-vision',
+      stage: request.image ? 'analyzing-vision' : 'querying-rag',
     });
 
     try {
-      // Stage 1: Vision Analysis
-      const visionResult = await analyzeVision(request.image);
+      let visionResult: VisionResponse | null = null;
+      
+      // Stage 1: Vision Analysis (only if image is provided)
+      if (request.image) {
+        visionResult = await analyzeVision(request.image);
+      }
       
       // Stage 2: Query RAG (simulated, like Shiny)
       setState(prev => ({ ...prev, stage: 'querying-rag' }));

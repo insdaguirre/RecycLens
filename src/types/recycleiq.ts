@@ -1,5 +1,5 @@
 export interface AnalyzeRequest {
-  image: string; // base64-encoded image
+  image?: string; // base64-encoded image (optional - either image or context required)
   location: string;
   context: string;
 }

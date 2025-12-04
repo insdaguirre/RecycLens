@@ -61,19 +61,22 @@ const RecycLens = () => {
 
   const handleCheck = async () => {
     // Validation
-    if (!imageFile) {
-      alert('Please upload an image');
-      return;
-    }
-
     if (!location.trim()) {
       alert('Please enter your location');
       return;
     }
 
+    if (!imageFile && !context.trim()) {
+      alert('Please provide either an image or context description');
+      return;
+    }
+
     try {
-      // Convert image to base64
-      const imageBase64 = await convertImageToBase64(imageFile);
+      let imageBase64: string | undefined;
+      if (imageFile) {
+        // Convert image to base64 only if image is provided
+        imageBase64 = await convertImageToBase64(imageFile);
+      }
 
       // Call API - this will handle stages up to geocoding
       await analyze({
@@ -167,7 +170,8 @@ const RecycLens = () => {
             {/* Context Input */}
             <div className="mb-6">
               <label className="text-sm font-medium text-gray-700 mb-2 block">
-                Add additional context <span className="text-gray-400 text-xs font-normal">(optional)</span>
+                Add additional context {!imageFile && <span className="text-red-500">*</span>}
+                {imageFile && <span className="text-gray-400 text-xs font-normal">(optional)</span>}
               </label>
               <textarea
                 placeholder="e.g., Plastic container with food residue"
@@ -176,18 +180,25 @@ const RecycLens = () => {
                 className="w-full px-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all resize-none text-gray-900"
                 rows={3}
               />
+              {!imageFile && (
+                <p className="mt-2 text-xs text-gray-500">Required if no image is provided</p>
+              )}
             </div>
 
             {/* Upload Area */}
             <div className="mb-6">
               <label className="text-sm font-medium text-gray-700 mb-2 block">
-                Item Photo <span className="text-red-500">*</span>
+                Item Photo {!context.trim() && <span className="text-red-500">*</span>}
+                {context.trim() && <span className="text-gray-400 text-xs font-normal">(optional)</span>}
               </label>
               <ImageUpload
                 onImageSelect={handleImageSelect}
                 imagePreview={imagePreview}
                 onRemove={handleRemoveImage}
               />
+              {!context.trim() && (
+                <p className="mt-2 text-xs text-gray-500">Required if no context is provided</p>
+              )}
             </div>
 
             {/* Error Display */}
@@ -200,7 +211,7 @@ const RecycLens = () => {
             {/* CTA Button */}
             <button
               onClick={handleCheck}
-              disabled={loading || !imageFile || !location.trim()}
+              disabled={loading || !location.trim() || (!imageFile && !context.trim())}
               className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-full font-medium hover:from-green-600 hover:to-green-700 transition-all shadow-lg shadow-green-500/30 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {loading ? (

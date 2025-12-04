@@ -32,23 +32,24 @@ router.post('/vision', async (req: Request, res: Response) => {
 // New endpoint: Recyclability analysis only
 router.post('/recyclability', async (req: Request, res: Response) => {
   try {
-    const { visionResult, location, context }: { visionResult: VisionResponse; location: string; context: string } = req.body;
+    const { visionResult, location, context }: { visionResult?: VisionResponse | null; location: string; context: string } = req.body;
 
     // Validate request
-    if (!visionResult) {
-      return res.status(400).json({ error: 'Vision result is required' });
-    }
-
     if (!location || typeof location !== 'string' || location.trim().length === 0) {
       return res.status(400).json({ error: 'Location is required' });
     }
 
-    // Context is optional, default to empty string
+    // Require either visionResult OR context
+    if (!visionResult && (!context || typeof context !== 'string' || context.trim().length === 0)) {
+      return res.status(400).json({ error: 'Either vision result or context is required' });
+    }
+
+    // Context is optional if visionResult is provided, default to empty string
     const contextValue = context || '';
 
     // Analyze recyclability with GPT-5 + web search
     const analysisResult = await analyzeRecyclability(
-      visionResult,
+      visionResult || null,
       contextValue,
       location
     );
@@ -70,19 +71,24 @@ router.post('/', async (req: Request, res: Response) => {
     const { image, location, context }: AnalyzeRequest = req.body;
 
     // Validate request
-    if (!image || typeof image !== 'string') {
-      return res.status(400).json({ error: 'Image (base64) is required' });
-    }
-
     if (!location || typeof location !== 'string' || location.trim().length === 0) {
       return res.status(400).json({ error: 'Location is required' });
     }
 
-    // Context is optional, default to empty string
+    // Require either image OR context
+    if (!image && (!context || typeof context !== 'string' || context.trim().length === 0)) {
+      return res.status(400).json({ error: 'Either image or context is required' });
+    }
+
+    // Context is optional if image is provided, default to empty string
     const contextValue = context || '';
 
-    // Step 1: Analyze image with Vision API
-    const visionResult = await analyzeImage(image);
+    let visionResult: VisionResponse | null = null;
+
+    // Step 1: Analyze image with Vision API (only if image is provided)
+    if (image) {
+      visionResult = await analyzeImage(image);
+    }
 
     // Step 2: Analyze recyclability with GPT-5 + web search
     const analysisResult = await analyzeRecyclability(

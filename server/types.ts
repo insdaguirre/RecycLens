@@ -1,6 +1,6 @@
 // Re-export types from frontend for backend use
 export interface AnalyzeRequest {
-  image: string;
+  image?: string; // optional - either image or context required
   location: string;
   context: string;
 }

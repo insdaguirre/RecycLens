@@ -32,7 +32,7 @@ export async function analyzeVision(image: string): Promise<VisionResponse> {
 }
 
 export async function analyzeRecyclability(
-  visionResult: VisionResponse,
+  visionResult: VisionResponse | null,
   location: string,
   context: string
 ): Promise<AnalyzeResponse> {
