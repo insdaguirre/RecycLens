@@ -104,12 +104,12 @@ const RecycLens = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50">
+      <nav className="sticky top-0 z-50 px-4 pt-4">
         <GlassSurface
           width="100%"
           height="auto"
-          borderRadius={0}
-          className="border-b border-gray-100"
+          borderRadius={24}
+          className=""
         >
           <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between w-full">
             <button
