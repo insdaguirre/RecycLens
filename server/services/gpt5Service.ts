@@ -1,5 +1,6 @@
 import OpenAI from 'openai';
 import type { VisionResponse, AnalyzeResponse, Facility } from '../types.js';
+import { queryRAG } from './ragService.js';
 
 // Lazy initialization of OpenAI client
 function getOpenAIClient() {
@@ -129,6 +130,63 @@ export async function analyzeRecyclability(
       userLocation.country = parsedLocation.country;
     }
     
+    // Query RAG service for local regulations
+    let ragContext = '';
+    let ragSources: string[] = [];
+    let ragQueried = false;
+    
+    // Check if RAG service URL is configured
+    const ragServiceUrl = process.env.RAG_SERVICE_URL;
+    console.log('RAG Service Status:', {
+      configured: !!ragServiceUrl,
+      url: ragServiceUrl ? 'set' : 'not set',
+      material: visionResult.primaryMaterial,
+      location
+    });
+    
+    try {
+      const ragResult = await queryRAG(
+        visionResult.primaryMaterial,
+        location,
+        visionResult.condition,
+        context
+      );
+      
+      // Track that RAG was queried (even if it returned empty)
+      ragQueried = true;
+      
+      if (ragResult) {
+        // Always include sources if available, even if regulations are empty
+        ragSources = ragResult.sources || [];
+        
+        // Use regulations if they exist and are non-empty
+        if (ragResult.regulations && ragResult.regulations.trim().length > 0) {
+          ragContext = ragResult.regulations;
+          console.log('RAG query successful:', {
+            regulationsLength: ragResult.regulations.length,
+            sourcesCount: ragSources.length,
+            sources: ragSources
+          });
+        } else {
+          console.log('RAG query returned empty regulations:', {
+            regulationsLength: ragResult.regulations?.length || 0,
+            sourcesCount: ragSources.length,
+            sources: ragSources,
+            material: visionResult.primaryMaterial,
+            location
+          });
+        }
+      } else {
+        console.log('RAG query returned null - service may be unavailable');
+      }
+    } catch (error) {
+      console.error('RAG query error (non-fatal):', error);
+      // Continue without RAG context, but still mark as queried if we attempted it
+      if (ragServiceUrl) {
+        ragQueried = true;
+      }
+    }
+    
     // Prepare the input prompt
     const input = `You are a recycling and disposal assistant. Analyze this item for recyclability:
 
@@ -142,6 +200,8 @@ Material Analysis:
 User Context: ${context || 'None provided'}
 
 User Location: ${location}
+
+${ragContext ? `\nLocal Recycling Regulations (from official sources):\n${ragContext}\n\nUse these official regulations as the primary source for determining recyclability and disposal instructions.` : ''}
 
 Please:
 1. Determine if this item is recyclable (true/false)
@@ -165,8 +225,11 @@ Please:
     "address": string,
     "url": string,
     "notes": string
-  }]
+  }],
+  "webSearchSources": string[]
 }
+
+IMPORTANT: Include a "webSearchSources" array with URLs of web pages you consulted for recycling information (not just facilities). This should include any websites you used to determine recyclability, disposal methods, or general recycling guidelines. Include the full URLs of the sources you used.
 
 Search for queries like "recycling facilities ${location}" or "${visionResult.primaryMaterial} disposal ${location}" to find local facilities.`;
 
@@ -200,6 +263,11 @@ Search for queries like "recycling facilities ${location}" or "${visionResult.pr
     // Parse JSON from response
     const parsed = extractJSONFromResponse(outputText);
 
+    // Extract web search sources
+    const webSearchSources: string[] = Array.isArray(parsed.webSearchSources)
+      ? parsed.webSearchSources.filter((url: any) => typeof url === 'string' && url.trim().length > 0)
+      : [];
+
     // Validate and structure the response
     const facilities: Facility[] = Array.isArray(parsed.facilities)
       ? parsed.facilities.map((f: any) => ({
@@ -224,6 +292,9 @@ Search for queries like "recycling facilities ${location}" or "${visionResult.pr
       reasoning: parsed.reasoning || 'Analysis completed',
       locationUsed: parsed.locationUsed || location,
       facilities: limitedFacilities,
+      ragSources: ragSources.length > 0 ? ragSources : undefined,
+      ragQueried: ragQueried,
+      webSearchSources: webSearchSources.length > 0 ? webSearchSources : undefined,
     };
   } catch (error) {
     console.error('GPT-5 service error:', error);

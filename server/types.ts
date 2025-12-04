@@ -36,5 +36,8 @@ export interface AnalyzeResponse {
   reasoning: string;
   locationUsed: string;
   facilities: Facility[];
+  ragSources?: string[];
+  ragQueried?: boolean;
+  webSearchSources?: string[];
 }
 
