@@ -37,9 +37,19 @@ export interface AnalyzeResponse {
   facilities: Facility[];
 }
 
+export type AnalysisStage = 
+  | 'idle' 
+  | 'analyzing-vision' 
+  | 'querying-rag' 
+  | 'analyzing-recyclability' 
+  | 'geocoding' 
+  | 'complete' 
+  | 'error';
+
 export interface AnalyzeState {
   loading: boolean;
   error: string | null;
   data: AnalyzeResponse | null;
+  stage: AnalysisStage;
 }
 

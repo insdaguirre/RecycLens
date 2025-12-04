@@ -1,0 +1,7 @@
+change models to be smaller 
+specify allowed file types
+add async progress indicators 
+add sources menu 
+change required fields 
+chat box integration 
+auto location feature 

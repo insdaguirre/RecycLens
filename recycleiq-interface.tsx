@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MapPin, Camera, Check, Info, Scan, Map, Loader2 } from 'lucide-react';
 import { useAnalyzeItem } from './src/hooks/useAnalyzeItem';
 import ImageUpload from './src/components/ImageUpload';
@@ -15,7 +15,22 @@ const RecycLens = () => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
   
-  const { analyze, loading, error, data } = useAnalyzeItem();
+  const { analyze, loading, error, data, stage, setStage, complete } = useAnalyzeItem();
+
+  // Map stages to user-friendly messages
+  const stageMessages: Record<string, string> = {
+    'analyzing-vision': 'Analyzing image...',
+    'querying-rag': 'Querying local regulations...',
+    'analyzing-recyclability': 'Determining recyclability and searching for facilities...',
+    'geocoding': 'Finding recycling locations...',
+  };
+
+  const getButtonText = () => {
+    if (!loading) {
+      return 'Check if it\'s Recyclable';
+    }
+    return stageMessages[stage] || 'Analyzing...';
+  };
 
   const handleImageSelect = (file: File) => {
     setImageFile(file);
@@ -60,20 +75,27 @@ const RecycLens = () => {
       // Convert image to base64
       const imageBase64 = await convertImageToBase64(imageFile);
 
-      // Call API
+      // Call API - this will handle stages up to geocoding
       await analyze({
         image: imageBase64,
         location: location.trim(),
         context: context.trim() || '', // Allow empty context
       });
 
-      // Show results
+      // Show results - geocoding stage is already set, completion will be handled by FacilityMap
       setShowResult(true);
     } catch (err) {
       // Error is handled by the hook, but we can show an alert too
       console.error('Analysis failed:', err);
     }
   };
+
+  // Handle completion when there are no facilities to geocode
+  useEffect(() => {
+    if (data && data.facilities && data.facilities.length === 0 && stage === 'geocoding') {
+      complete();
+    }
+  }, [data, stage, complete]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
@@ -184,7 +206,7 @@ const RecycLens = () => {
               {loading ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  Analyzing...
+                  {getButtonText()}
                 </>
               ) : (
                 'Check if it\'s Recyclable'
@@ -210,6 +232,7 @@ const RecycLens = () => {
               <FacilityMap
                 facilities={data.facilities}
                 userLocation={data.locationUsed || location}
+                onGeocodingComplete={complete}
               />
             ) : (
               <div className="h-96 bg-gradient-to-br from-green-50 to-blue-50 relative">
