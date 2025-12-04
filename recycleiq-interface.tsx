@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { MapPin, Camera, Check, Info, Scan, Map, Loader2 } from 'lucide-react';
+import { MapPin, Camera, Check, Info, Scan, Map, Loader2, Recycle } from 'lucide-react';
 import { useAnalyzeItem } from './src/hooks/useAnalyzeItem';
 import ImageUpload from './src/components/ImageUpload';
 import ResultsPanel from './src/components/ResultsPanel';
 import FacilityCard from './src/components/FacilityCard';
 import FacilityMap from './src/components/FacilityMap';
 import HowItWorks from './src/components/HowItWorks';
+import GlassSurface from './src/components/GlassSurface';
 
 const RecycLens = () => {
   const [currentPage, setCurrentPage] = useState<'home' | 'how-it-works'>('home');
@@ -103,26 +104,31 @@ const RecycLens = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <button
-            onClick={() => setCurrentPage('home')}
-            className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
-          >
-            <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center">
-              <div className="w-4 h-4 border-2 border-white rounded-full"></div>
-            </div>
-            <span className="text-xl font-light tracking-tight">RecycLens</span>
-          </button>
-          <div className="flex items-center space-x-8">
+      <nav className="sticky top-0 z-50">
+        <GlassSurface
+          width="100%"
+          height="auto"
+          borderRadius={0}
+          className="border-b border-gray-100"
+        >
+          <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between w-full">
             <button
-              onClick={() => setCurrentPage(currentPage === 'home' ? 'how-it-works' : 'home')}
-              className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+              onClick={() => setCurrentPage('home')}
+              className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
             >
-              {currentPage === 'home' ? 'How it Works' : 'Home'}
+              <Recycle className="w-8 h-8 text-green-500" />
+              <span className="text-xl font-light tracking-tight">RecycLens</span>
             </button>
+            <div className="flex items-center space-x-8">
+              <button
+                onClick={() => setCurrentPage(currentPage === 'home' ? 'how-it-works' : 'home')}
+                className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                {currentPage === 'home' ? 'How it Works' : 'Home'}
+              </button>
+            </div>
           </div>
-        </div>
+        </GlassSurface>
       </nav>
 
       {currentPage === 'home' ? (
