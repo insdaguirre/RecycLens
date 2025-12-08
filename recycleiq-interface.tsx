@@ -3,6 +3,7 @@ import { MapPin, Camera, Check, Info, Scan, Map, Loader2, Recycle } from 'lucide
 import { useAnalyzeItem } from './src/hooks/useAnalyzeItem';
 import ImageUpload from './src/components/ImageUpload';
 import ResultsPanel from './src/components/ResultsPanel';
+import SourcesPanel from './src/components/SourcesPanel';
 import FacilityCard from './src/components/FacilityCard';
 import FacilityMap from './src/components/FacilityMap';
 import HowItWorks from './src/components/HowItWorks';
@@ -240,6 +241,17 @@ const RecycLens = () => {
             {data && <ResultsPanel data={data} isVisible={showResult} />}
           </div>
         </div>
+
+        {/* Sources Panel - appears below both cards, spans full width */}
+        {showResult && data && (
+          <div className="mt-8 w-full">
+            <SourcesPanel
+              ragSources={data.ragSources}
+              webSearchSources={data.webSearchSources}
+              ragQueried={data.ragQueried}
+            />
+          </div>
+        )}
 
         {/* Map Section */}
         <div className="mt-20">
