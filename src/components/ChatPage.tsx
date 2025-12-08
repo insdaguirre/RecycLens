@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, ComponentProps } from 'react';
 import { Send, Loader2, ArrowLeft } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 import { useChat } from '../hooks/useChat';
 import type { ChatContext } from '../types/recycleiq';
 
@@ -64,22 +65,65 @@ export default function ChatPage({ initialContext, onBack }: ChatPageProps) {
               </div>
             )}
             
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
+            {messages.map((message, index) => {
+              const isUser = message.role === 'user';
+              const markdownComponents = {
+                p: ({ node, ...props }: ComponentProps<'p'> & { node?: unknown }) => (
+                  <p className="mb-2 last:mb-0" {...props} />
+                ),
+                ul: ({ node, ...props }: ComponentProps<'ul'> & { node?: unknown }) => (
+                  <ul className="list-disc pl-5 space-y-1 mb-2 last:mb-0" {...props} />
+                ),
+                ol: ({ node, ...props }: ComponentProps<'ol'> & { node?: unknown }) => (
+                  <ol className="list-decimal pl-5 space-y-1 mb-2 last:mb-0" {...props} />
+                ),
+                li: ({ node, ...props }: ComponentProps<'li'> & { node?: unknown }) => (
+                  <li className="leading-relaxed" {...props} />
+                ),
+                h1: ({ node, ...props }: ComponentProps<'h1'> & { node?: unknown }) => (
+                  <h1 className="text-lg font-semibold mb-2" {...props} />
+                ),
+                h2: ({ node, ...props }: ComponentProps<'h2'> & { node?: unknown }) => (
+                  <h2 className="text-base font-semibold mb-2" {...props} />
+                ),
+                h3: ({ node, ...props }: ComponentProps<'h3'> & { node?: unknown }) => (
+                  <h3 className="text-sm font-semibold mb-2" {...props} />
+                ),
+                a: ({ node, ...props }: ComponentProps<'a'> & { node?: unknown }) => (
+                  <a
+                    className={`underline ${isUser ? 'text-white' : 'text-green-700'}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    {...props}
+                  />
+                ),
+                strong: ({ node, ...props }: ComponentProps<'strong'> & { node?: unknown }) => (
+                  <strong className="font-semibold" {...props} />
+                ),
+              };
+
+              return (
                 <div
-                  className={`max-w-[80%] rounded-2xl px-4 py-3 ${
-                    message.role === 'user'
-                      ? 'bg-green-500 text-white'
-                      : 'bg-gray-100 text-gray-900'
-                  }`}
+                  key={index}
+                  className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}
                 >
-                  <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
+                  <div
+                    className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+                      isUser
+                        ? 'bg-green-500 text-white'
+                        : 'bg-gray-100 text-gray-900'
+                    }`}
+                  >
+                    <ReactMarkdown
+                      className="text-sm leading-relaxed break-words space-y-2"
+                      components={markdownComponents}
+                    >
+                      {message.content}
+                    </ReactMarkdown>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
 
             {loading && (
               <div className="flex justify-start">
