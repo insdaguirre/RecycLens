@@ -242,14 +242,20 @@ const RecycLens = () => {
           </div>
         </div>
 
-        {/* Sources Panel - appears below both cards, spans full width */}
+        {/* Sources Panel - appears below both cards, matches width of two cards */}
         {showResult && data && (
-          <div className="mt-8 w-full">
-            <SourcesPanel
-              ragSources={data.ragSources}
-              webSearchSources={data.webSearchSources}
-              ragQueried={data.ragQueried}
-            />
+          <div className={`mt-8 transition-all duration-700 ease-in-out ${
+            showResult 
+              ? 'flex flex-col md:flex-row items-start justify-center gap-8' 
+              : ''
+          }`}>
+            <div className="w-full md:w-[calc(80%+2rem)]">
+              <SourcesPanel
+                ragSources={data.ragSources}
+                webSearchSources={data.webSearchSources}
+                ragQueried={data.ragQueried}
+              />
+            </div>
           </div>
         )}
 
