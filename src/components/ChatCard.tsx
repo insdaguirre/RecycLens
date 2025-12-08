@@ -8,7 +8,7 @@ export default function ChatCard({ onClick }: ChatCardProps) {
   return (
     <button
       onClick={onClick}
-      className="w-full flex-1 bg-gradient-to-br from-green-50 to-green-100 rounded-2xl border border-green-200 p-6 hover:from-green-100 hover:to-green-200 transition-all flex flex-col items-center justify-center gap-3 text-left group"
+      className="w-full h-full bg-gradient-to-br from-green-50 to-green-100 rounded-2xl border border-green-200 p-8 hover:from-green-100 hover:to-green-200 transition-all flex flex-col items-center justify-center gap-3 text-left group"
     >
       <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center group-hover:bg-green-600 transition-colors">
         <MessageCircle className="w-6 h-6 text-white" />

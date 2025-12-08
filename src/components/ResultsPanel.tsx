@@ -1,14 +1,12 @@
 import { Check, X } from 'lucide-react';
 import type { AnalyzeResponse } from '../types/recycleiq';
-import ChatCard from './ChatCard';
 
 interface ResultsPanelProps {
   data: AnalyzeResponse;
   isVisible: boolean;
-  onChatClick?: () => void;
 }
 
-export default function ResultsPanel({ data, isVisible, onChatClick }: ResultsPanelProps) {
+export default function ResultsPanel({ data, isVisible }: ResultsPanelProps) {
   if (!isVisible) {
     return null;
   }
@@ -89,12 +87,6 @@ export default function ResultsPanel({ data, isVisible, onChatClick }: ResultsPa
         </div>
       </div>
 
-      {/* Chat Card - fills remaining space */}
-      {onChatClick && (
-        <div className="mt-auto">
-          <ChatCard onClick={onChatClick} />
-        </div>
-      )}
     </div>
   );
 }
