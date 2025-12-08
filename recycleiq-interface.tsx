@@ -111,12 +111,12 @@ const RecycLens = () => {
       {/* Navigation */}
       <nav className="sticky top-0 z-50 px-4 pt-4">
         <GlassSurface
-          width="100%"
+          width="auto"
           height="auto"
           borderRadius={24}
           className=""
         >
-          <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between w-full">
+          <div className="px-6 py-4 flex items-center justify-between w-auto">
             <button
               onClick={() => setCurrentPage('home')}
               className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
