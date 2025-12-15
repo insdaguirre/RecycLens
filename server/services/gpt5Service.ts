@@ -105,7 +105,7 @@ function extractJSONFromResponse(content: string): any {
  * Analyzes recyclability using Responses API with web search for facilities
  */
 export async function analyzeRecyclability(
-  visionResult: VisionResponse,
+  visionResult: VisionResponse | null,
   context: string,
   location: string
 ): Promise<AnalyzeResponse> {
@@ -130,6 +130,11 @@ export async function analyzeRecyclability(
       userLocation.country = parsedLocation.country;
     }
     
+    // Determine material for RAG query
+    // If we have vision result, use it; otherwise we'll need to infer from context
+    let materialForRAG = visionResult?.primaryMaterial || '';
+    let conditionForRAG = visionResult?.condition || '';
+    
     // Query RAG service for local regulations
     let ragContext = '';
     let ragSources: string[] = [];
@@ -137,60 +142,69 @@ export async function analyzeRecyclability(
     
     // Check if RAG service URL is configured
     const ragServiceUrl = process.env.RAG_SERVICE_URL;
-    console.log('RAG Service Status:', {
-      configured: !!ragServiceUrl,
-      url: ragServiceUrl ? 'set' : 'not set',
-      material: visionResult.primaryMaterial,
-      location
-    });
     
-    try {
-      const ragResult = await queryRAG(
-        visionResult.primaryMaterial,
-        location,
-        visionResult.condition,
-        context
-      );
+    // Only query RAG if we have a material (from vision or we'll infer from context)
+    // If no vision result, we'll query RAG after determining material from context
+    if (materialForRAG) {
+      console.log('RAG Service Status:', {
+        configured: !!ragServiceUrl,
+        url: ragServiceUrl ? 'set' : 'not set',
+        material: materialForRAG,
+        location
+      });
       
-      // Track that RAG was queried (even if it returned empty)
-      ragQueried = true;
-      
-      if (ragResult) {
-        // Always include sources if available, even if regulations are empty
-        ragSources = ragResult.sources || [];
+      try {
+        const ragResult = await queryRAG(
+          materialForRAG,
+          location,
+          conditionForRAG,
+          context
+        );
         
-        // Use regulations if they exist and are non-empty
-        if (ragResult.regulations && ragResult.regulations.trim().length > 0) {
-          ragContext = ragResult.regulations;
-          console.log('RAG query successful:', {
-            regulationsLength: ragResult.regulations.length,
-            sourcesCount: ragSources.length,
-            sources: ragSources
-          });
-        } else {
-          console.log('RAG query returned empty regulations:', {
-            regulationsLength: ragResult.regulations?.length || 0,
-            sourcesCount: ragSources.length,
-            sources: ragSources,
-            material: visionResult.primaryMaterial,
-            location
-          });
-        }
-      } else {
-        console.log('RAG query returned null - service may be unavailable');
-      }
-    } catch (error) {
-      console.error('RAG query error (non-fatal):', error);
-      // Continue without RAG context, but still mark as queried if we attempted it
-      if (ragServiceUrl) {
+        // Track that RAG was queried (even if it returned empty)
         ragQueried = true;
+        
+        if (ragResult) {
+          // Always include sources if available, even if regulations are empty
+          ragSources = ragResult.sources || [];
+          
+          // Use regulations if they exist and are non-empty
+          if (ragResult.regulations && ragResult.regulations.trim().length > 0) {
+            ragContext = ragResult.regulations;
+            console.log('RAG query successful:', {
+              regulationsLength: ragResult.regulations.length,
+              sourcesCount: ragSources.length,
+              sources: ragSources
+            });
+          } else {
+            console.log('RAG query returned empty regulations:', {
+              regulationsLength: ragResult.regulations?.length || 0,
+              sourcesCount: ragSources.length,
+              sources: ragSources,
+              material: materialForRAG,
+              location
+            });
+          }
+        } else {
+          console.log('RAG query returned null - service may be unavailable');
+        }
+      } catch (error) {
+        console.error('RAG query error (non-fatal):', error);
+        // Continue without RAG context, but still mark as queried if we attempted it
+        if (ragServiceUrl) {
+          ragQueried = true;
+        }
       }
     }
     
     // Prepare the input prompt
-    const input = `You are a recycling and disposal assistant. Analyze this item for recyclability:
+    let input: string;
+    
+    if (visionResult) {
+      // Case 1: We have vision analysis results
+      input = `You are a recycling and disposal assistant. Analyze this item for recyclability:
 
-Material Analysis:
+Material Analysis (from image):
 - Primary Material: ${visionResult.primaryMaterial}
 - Category: ${visionResult.category}
 - Condition: ${visionResult.condition}
@@ -232,6 +246,52 @@ Please:
 IMPORTANT: Include a "webSearchSources" array with URLs of web pages you consulted for recycling information (not just facilities). This should include any websites you used to determine recyclability, disposal methods, or general recycling guidelines. Include the full URLs of the sources you used.
 
 Search for queries like "recycling facilities ${location}" or "${visionResult.primaryMaterial} disposal ${location}" to find local facilities.`;
+    } else {
+      // Case 2: No image, use context to determine identity
+      input = `You are a recycling and disposal assistant. Analyze this item for recyclability based on the user's description.
+
+User Description: ${context || 'No description provided'}
+
+User Location: ${location}
+
+${ragContext ? `\nLocal Recycling Regulations (from official sources):\n${ragContext}\n\nUse these official regulations as the primary source for determining recyclability and disposal instructions.` : ''}
+
+IMPORTANT: First, identify the item from the user's description. Determine:
+- What is the item? (e.g., "plastic water bottle", "aluminum can", "cardboard box", "lithium battery")
+- What is the primary material? (e.g., "plastic", "aluminum", "cardboard", "battery")
+- What category does it belong to? (e.g., "plastic-container", "metal-can", "paper-cardboard", "e-waste", "hazardous-waste")
+- What is its condition? (e.g., "clean and empty", "partially full", "soiled with food", "broken")
+
+Then:
+1. Determine if this item is recyclable (true/false)
+2. Identify the category it belongs to
+3. Determine which bin it should go in (recycling, landfill, compost, hazardous, or unknown)
+4. Provide clear, step-by-step instructions for proper disposal
+5. Use web search to find 3-5 nearby recycling and disposal facilities in ${location}
+6. Return your complete analysis as a JSON object matching this exact structure:
+{
+  "isRecyclable": boolean,
+  "category": string,
+  "bin": "recycling" | "landfill" | "compost" | "hazardous" | "unknown",
+  "confidence": number (0-1),
+  "materialDescription": string (describe the item based on the user's context),
+  "instructions": string[],
+  "reasoning": string,
+  "locationUsed": string,
+  "facilities": [{
+    "name": string,
+    "type": string,
+    "address": string,
+    "url": string,
+    "notes": string
+  }],
+  "webSearchSources": string[]
+}
+
+IMPORTANT: Include a "webSearchSources" array with URLs of web pages you consulted for recycling information (not just facilities). This should include any websites you used to determine recyclability, disposal methods, or general recycling guidelines. Include the full URLs of the sources you used.
+
+Search for queries like "recycling facilities ${location}" or "[material] disposal ${location}" to find local facilities.`;
+    }
 
     // Build tools array with web_search
     const tools: any[] = [
@@ -284,10 +344,10 @@ Search for queries like "recycling facilities ${location}" or "${visionResult.pr
 
     return {
       isRecyclable: Boolean(parsed.isRecyclable),
-      category: parsed.category || visionResult.category,
+      category: parsed.category || visionResult?.category || 'unknown',
       bin: parsed.bin || 'unknown',
       confidence: typeof parsed.confidence === 'number' ? parsed.confidence : 0.5,
-      materialDescription: parsed.materialDescription || visionResult.shortDescription,
+      materialDescription: parsed.materialDescription || visionResult?.shortDescription || context || 'Item description not available',
       instructions: Array.isArray(parsed.instructions) ? parsed.instructions : [],
       reasoning: parsed.reasoning || 'Analysis completed',
       locationUsed: parsed.locationUsed || location,

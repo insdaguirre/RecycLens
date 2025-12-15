@@ -8,13 +8,14 @@ interface FacilityMapProps {
   facilities: Facility[];
   userLocation?: string;
   onMarkerClick?: (facility: Facility) => void;
+  onGeocodingComplete?: () => void;
 }
 
 interface FacilityWithCoords extends Facility {
   coordinates: [number, number];
 }
 
-export default function FacilityMap({ facilities, userLocation, onMarkerClick }: FacilityMapProps) {
+export default function FacilityMap({ facilities, userLocation, onMarkerClick, onGeocodingComplete }: FacilityMapProps) {
   const [facilitiesWithCoords, setFacilitiesWithCoords] = useState<FacilityWithCoords[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -71,6 +72,9 @@ export default function FacilityMap({ facilities, userLocation, onMarkerClick }:
         setError('Failed to load facility locations');
       } finally {
         setLoading(false);
+        if (onGeocodingComplete) {
+          onGeocodingComplete();
+        }
       }
     };
 

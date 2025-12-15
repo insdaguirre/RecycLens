@@ -1,21 +1,42 @@
-import { useState } from 'react';
-import { MapPin, Camera, Check, Info, Scan, Map, Loader2 } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { MapPin, Camera, Check, Info, Scan, Map, Loader2, Recycle } from 'lucide-react';
 import { useAnalyzeItem } from './src/hooks/useAnalyzeItem';
 import ImageUpload from './src/components/ImageUpload';
 import ResultsPanel from './src/components/ResultsPanel';
+import SourcesPanel from './src/components/SourcesPanel';
+import ChatPage from './src/components/ChatPage';
+import ChatCard from './src/components/ChatCard';
 import FacilityCard from './src/components/FacilityCard';
 import FacilityMap from './src/components/FacilityMap';
 import HowItWorks from './src/components/HowItWorks';
+import GlassSurface from './src/components/GlassSurface';
+import type { ChatContext } from './src/types/recycleiq';
 
 const RecycLens = () => {
-  const [currentPage, setCurrentPage] = useState<'home' | 'how-it-works'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'how-it-works' | 'chat'>('home');
   const [location, setLocation] = useState('');
   const [context, setContext] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
+  const [chatContext, setChatContext] = useState<ChatContext | undefined>(undefined);
   
-  const { analyze, loading, error, data } = useAnalyzeItem();
+  const { analyze, loading, error, data, stage, complete, visionData } = useAnalyzeItem();
+
+  // Map stages to user-friendly messages
+  const stageMessages: Record<string, string> = {
+    'analyzing-vision': 'Analyzing image...',
+    'querying-rag': 'Querying local regulations...',
+    'analyzing-recyclability': 'Determining recyclability and searching for facilities...',
+    'geocoding': 'Finding recycling locations...',
+  };
+
+  const getButtonText = () => {
+    if (!loading) {
+      return 'Check if it\'s Recyclable';
+    }
+    return stageMessages[stage] || 'Analyzing...';
+  };
 
   const handleImageSelect = (file: File) => {
     setImageFile(file);
@@ -46,28 +67,31 @@ const RecycLens = () => {
 
   const handleCheck = async () => {
     // Validation
-    if (!imageFile) {
-      alert('Please upload an image');
-      return;
-    }
-
     if (!location.trim()) {
       alert('Please enter your location');
       return;
     }
 
-    try {
-      // Convert image to base64
-      const imageBase64 = await convertImageToBase64(imageFile);
+    if (!imageFile && !context.trim()) {
+      alert('Please provide either an image or context description');
+      return;
+    }
 
-      // Call API
+    try {
+      let imageBase64: string | undefined;
+      if (imageFile) {
+        // Convert image to base64 only if image is provided
+        imageBase64 = await convertImageToBase64(imageFile);
+      }
+
+      // Call API - this will handle stages up to geocoding
       await analyze({
         image: imageBase64,
         location: location.trim(),
         context: context.trim() || '', // Allow empty context
       });
 
-      // Show results
+      // Show results - geocoding stage is already set, completion will be handled by FacilityMap
       setShowResult(true);
     } catch (err) {
       // Error is handled by the hook, but we can show an alert too
@@ -75,29 +99,47 @@ const RecycLens = () => {
     }
   };
 
+  // Handle completion when there are no facilities to geocode
+  useEffect(() => {
+    if (data && data.facilities && data.facilities.length === 0 && stage === 'geocoding') {
+      complete();
+    }
+  }, [data, stage, complete]);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <button
-            onClick={() => setCurrentPage('home')}
-            className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
-          >
-            <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center">
-              <div className="w-4 h-4 border-2 border-white rounded-full"></div>
-            </div>
-            <span className="text-xl font-light tracking-tight">RecycLens</span>
-          </button>
-          <div className="flex items-center space-x-8">
+      <nav className="sticky top-0 z-50 px-4 pt-4">
+        <GlassSurface
+          width="100%"
+          height="auto"
+          borderRadius={24}
+          className="max-w-7xl mx-auto"
+        >
+          <div className="px-6 py-4 flex items-center justify-between w-full">
             <button
-              onClick={() => setCurrentPage(currentPage === 'home' ? 'how-it-works' : 'home')}
-              className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+              onClick={() => setCurrentPage('home')}
+              className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
             >
-              {currentPage === 'home' ? 'How it Works' : 'Home'}
+              <Recycle className="w-8 h-8 text-green-500" />
+              <span className="text-xl font-light tracking-tight">RecycLens</span>
             </button>
+            <div className="flex items-center space-x-8">
+              <button
+                onClick={() => setCurrentPage('chat')}
+                className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                Chat
+              </button>
+              <button
+                onClick={() => setCurrentPage(currentPage === 'home' ? 'how-it-works' : 'home')}
+                className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                {currentPage === 'home' ? 'How it Works' : 'Home'}
+              </button>
+            </div>
           </div>
-        </div>
+        </GlassSurface>
       </nav>
 
       {currentPage === 'home' ? (
@@ -113,18 +155,20 @@ const RecycLens = () => {
           </p>
         </div>
 
-        {/* Container that transitions from centered to side-by-side */}
-        <div className={`transition-all duration-700 ease-in-out ${
-          showResult 
-            ? 'flex items-start justify-center gap-8' // Side-by-side with gap
-            : ''  // No flex when centered - let children center themselves
-        }`}>
-          {/* Entry Box - transitions from centered to left (40%) */}
-          <div className={`bg-white rounded-3xl shadow-sm border border-gray-100 p-8 transition-all duration-700 ease-in-out ${
+        {/* Main content container */}
+        <div className={showResult ? 'flex flex-col md:flex-row items-stretch justify-center gap-8' : ''}>
+          {/* Left Column: Upload + Chat Card */}
+          <div className={`transition-all duration-700 ease-in-out flex flex-col gap-8 ${
             showResult 
-              ? 'w-[40%]' // 40% width when results show
+              ? 'w-full md:w-[40%]' // Full width on mobile, 40% on desktop when results show
               : 'max-w-2xl mx-auto' // Centered with same max-width as subtitle
           }`}>
+            {/* Entry Box - transitions from centered to left (40%) */}
+            <div className={`bg-white rounded-3xl shadow-sm border border-gray-100 p-8 transition-all duration-700 ease-in-out ${
+              showResult 
+                ? 'w-full' // Full width of left column
+                : 'w-full' // Full width when centered
+            }`}>
             {/* Location Input */}
             <div className="mb-6">
               <label className="text-sm font-medium text-gray-700 mb-2 block">
@@ -145,7 +189,8 @@ const RecycLens = () => {
             {/* Context Input */}
             <div className="mb-6">
               <label className="text-sm font-medium text-gray-700 mb-2 block">
-                Add additional context <span className="text-gray-400 text-xs font-normal">(optional)</span>
+                Add additional context {!imageFile && <span className="text-red-500">*</span>}
+                {imageFile && <span className="text-gray-400 text-xs font-normal">(optional)</span>}
               </label>
               <textarea
                 placeholder="e.g., Plastic container with food residue"
@@ -154,18 +199,25 @@ const RecycLens = () => {
                 className="w-full px-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all resize-none text-gray-900"
                 rows={3}
               />
+              {!imageFile && (
+                <p className="mt-2 text-xs text-gray-500">Required if no image is provided</p>
+              )}
             </div>
 
             {/* Upload Area */}
             <div className="mb-6">
               <label className="text-sm font-medium text-gray-700 mb-2 block">
-                Item Photo <span className="text-red-500">*</span>
+                Item Photo {!context.trim() && <span className="text-red-500">*</span>}
+                {context.trim() && <span className="text-gray-400 text-xs font-normal">(optional)</span>}
               </label>
               <ImageUpload
                 onImageSelect={handleImageSelect}
                 imagePreview={imagePreview}
                 onRemove={handleRemoveImage}
               />
+              {!context.trim() && (
+                <p className="mt-2 text-xs text-gray-500">Required if no context is provided</p>
+              )}
             </div>
 
             {/* Error Display */}
@@ -178,29 +230,73 @@ const RecycLens = () => {
             {/* CTA Button */}
             <button
               onClick={handleCheck}
-              disabled={loading || !imageFile || !location.trim()}
+              disabled={loading || !location.trim() || (!imageFile && !context.trim())}
               className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-full font-medium hover:from-green-600 hover:to-green-700 transition-all shadow-lg shadow-green-500/30 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {loading ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  Analyzing...
+                  {getButtonText()}
                 </>
               ) : (
                 'Check if it\'s Recyclable'
               )}
             </button>
+            </div>
+
+            {/* Chat Card - directly underneath upload card, dynamically fills space */}
+            {showResult && data && (
+              <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 flex-1 flex items-center justify-center min-h-[200px] transition-all duration-700 ease-in-out">
+                <div className="w-full h-full flex items-center justify-center">
+                  <ChatCard
+                    onClick={() => {
+                      setChatContext({
+                        analysisData: data,
+                        location: location.trim(),
+                        material: data.materialDescription,
+                        visionData: visionData || undefined,
+                      });
+                      setCurrentPage('chat');
+                    }}
+                  />
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* Results Panel - appears on right (40%) */}
+          {/* Right Column: Results Panel */}
           <div className={`transition-all duration-700 ease-in-out ${
             showResult && data
-              ? 'w-[40%] opacity-100 translate-x-0' 
+              ? 'w-full md:w-[40%] opacity-100 translate-x-0' 
               : 'w-0 opacity-0 translate-x-8 overflow-hidden'
           }`}>
-            {data && <ResultsPanel data={data} isVisible={showResult} />}
+            {data && (
+              <ResultsPanel
+                data={data}
+                isVisible={showResult}
+              />
+            )}
           </div>
         </div>
+
+        {/* Sources Panel - appears below both columns */}
+
+        {/* Sources Panel - appears below both columns */}
+        {showResult && data && (
+          <div className={`mt-8 transition-all duration-700 ease-in-out ${
+            showResult 
+              ? 'flex flex-col md:flex-row items-start justify-center gap-8' 
+              : ''
+          }`}>
+            <div className="w-full md:w-[calc(80%+2rem)]">
+              <SourcesPanel
+                ragSources={data.ragSources}
+                webSearchSources={data.webSearchSources}
+                ragQueried={data.ragQueried}
+              />
+            </div>
+          </div>
+        )}
 
         {/* Map Section */}
         <div className="mt-20">
@@ -210,6 +306,7 @@ const RecycLens = () => {
               <FacilityMap
                 facilities={data.facilities}
                 userLocation={data.locationUsed || location}
+                onGeocodingComplete={complete}
               />
             ) : (
               <div className="h-96 bg-gradient-to-br from-green-50 to-blue-50 relative">
@@ -313,6 +410,11 @@ const RecycLens = () => {
             </div>
           </footer>
         </>
+      ) : currentPage === 'chat' ? (
+        <ChatPage
+          initialContext={chatContext}
+          onBack={() => setCurrentPage('home')}
+        />
       ) : (
         <HowItWorks onBackToHome={() => setCurrentPage('home')} />
       )}

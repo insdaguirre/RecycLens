@@ -6,6 +6,7 @@ An AI-powered recycling assistant that helps users identify recyclable items and
 
 - **Image Analysis**: Upload a photo of an item to identify its materials using OpenAI's vision capabilities
 - **Recyclability Assessment**: Get instant feedback on whether an item can be recycled with confidence scores
+- **Chat Assistant**: Ask questions about recycling with context-aware responses using GPT-4.1
 - **RAG-Enhanced Regulations**: Uses Retrieval-Augmented Generation (RAG) to provide accurate, location-specific recycling regulations from official sources
 - **Local Facilities**: Find nearby recycling and disposal facilities using web search
 - **Interactive Map**: View facilities on an interactive Mapbox map with markers and geocoding
@@ -18,7 +19,7 @@ An AI-powered recycling assistant that helps users identify recyclable items and
 - **Backend**: Node.js + Express + TypeScript
 - **RAG Service**: Python + FastAPI + LlamaIndex for querying local recycling regulations
 - **AI Services**: 
-  - OpenAI Responses API (GPT-4.1) with web search for recyclability assessment
+  - OpenAI Responses API (GPT-4.1) with web search for recyclability assessment and chat
   - OpenAI Responses API (GPT-4.1) for image analysis
 - **Maps**: Mapbox GL JS + Mapbox Geocoding API
 - **Deployment**: Railway (with Nixpacks builder)

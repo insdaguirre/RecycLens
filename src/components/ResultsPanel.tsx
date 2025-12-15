@@ -12,7 +12,7 @@ export default function ResultsPanel({ data, isVisible }: ResultsPanelProps) {
   }
 
   return (
-    <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 transition-all duration-700 ease-in-out">
+    <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 transition-all duration-700 ease-in-out flex flex-col min-h-[600px]">
       <div className="text-center mb-6">
         <div
           className={`w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center ${
@@ -72,7 +72,7 @@ export default function ResultsPanel({ data, isVisible }: ResultsPanelProps) {
       )}
 
       {/* Confidence */}
-      <div className="pt-6 border-t border-gray-100">
+      <div className="pt-6 border-t border-gray-100 mb-6">
         <p className="text-xs font-medium text-gray-500 mb-2">CONFIDENCE</p>
         <div className="flex items-center gap-2">
           <div className="flex-1 bg-gray-200 rounded-full h-2">
@@ -86,6 +86,7 @@ export default function ResultsPanel({ data, isVisible }: ResultsPanelProps) {
           </span>
         </div>
       </div>
+
     </div>
   );
 }
