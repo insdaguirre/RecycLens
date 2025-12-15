@@ -2,6 +2,12 @@
 
 An AI-powered recycling assistant that helps users identify recyclable items and find nearby recycling facilities using computer vision, RAG (Retrieval-Augmented Generation), and web search.
 
+## 🚀 Live Deployment
+
+**Try it now:** [https://recyclens-production.up.railway.app/](https://recyclens-production.up.railway.app/)
+
+The application is deployed on Railway and ready to use. Upload an image, enter your location, and get instant recycling guidance!
+
 ## Features
 
 - **Image Analysis**: Upload a photo of an item to identify its materials using OpenAI's vision capabilities
