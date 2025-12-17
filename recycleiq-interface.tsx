@@ -305,6 +305,11 @@ const RecycLens = () => {
           </div>
         )}
 
+        <div className=" mb-6 py-16 max-w-7xl mx-auto px-6 text-center">
+              <p className="text-sm text-gray-400"> ⚠️ <b>AI can sometimes hallucinate.</b> Please verify recycling advice with trusted sources. </p>
+        </div>
+
+
         {/* Map Section */}
         <div className="mt-20">
           <h2 className="text-4xl font-light text-gray-900 mb-8 text-center">Nearby Recycling Facilities</h2>
