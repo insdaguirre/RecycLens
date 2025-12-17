@@ -21,84 +21,83 @@ function parseLocation(location: string): {
   country?: string;
 } {
   const trimmed = location.trim();
-  
-  // Try to extract components
-  // Common patterns:
-  // - "City, State ZIP" (US)
-  // - "City, State" (US)
-  // - "City, Country"
-  // - "City, Region, Country"
-  // - Just ZIP code
-  
-  // For US locations, try to extract state
+
   const usStatePattern = /\b([A-Z]{2})\b/;
   const stateMatch = trimmed.match(usStatePattern);
-  
-  // Try to split by comma
-  const parts = trimmed.split(',').map(p => p.trim());
-  
+
+  const parts = trimmed.split(',').map((p) => p.trim());
+
   if (parts.length >= 2) {
     const city = parts[0];
     const secondPart = parts[1];
-    
-    // Check if second part is a US state (2 letters)
+
     if (stateMatch && secondPart.length <= 3) {
-      return {
-        city,
-        region: secondPart,
-        country: 'US',
-      };
+      return { city, region: secondPart, country: 'US' };
     }
-    
-    // Otherwise, treat as region/country
+
     if (parts.length >= 3) {
-      return {
-        city: parts[0],
-        region: parts[1],
-        country: parts[2],
-      };
+      return { city: parts[0], region: parts[1], country: parts[2] };
     }
-    
-    return {
-      city,
-      region: secondPart,
-    };
+
+    return { city, region: secondPart };
   }
-  
-  // If it's just a ZIP code or single word, return as city
+
   if (trimmed.length <= 10 && /^\d+/.test(trimmed)) {
-    // Likely a ZIP code
-    return {
-      city: trimmed,
-      country: 'US',
-    };
+    return { city: trimmed, country: 'US' };
   }
-  
-  return {
-    city: trimmed,
-  };
+
+  return { city: trimmed };
 }
 
 /**
  * Extracts JSON from response text
  */
 function extractJSONFromResponse(content: string): any {
-  // Try to find JSON in the response
   const jsonMatch = content.match(/\{[\s\S]*\}/);
   if (jsonMatch) {
     try {
       return JSON.parse(jsonMatch[0]);
-    } catch (e) {
-      // If parsing fails, try to extract more carefully
+    } catch {
+      // fall through
     }
   }
 
-  // Fallback: try parsing the entire content
   try {
     return JSON.parse(content);
-  } catch (e) {
+  } catch {
     throw new Error('Failed to parse JSON from assistant response');
   }
+}
+
+function normalizeFacilityUrl(url: string): string {
+  try {
+    const parsed = new URL(url);
+    return parsed.href;
+  } catch {
+    console.error('Problem with URL.');
+    return '#';
+  }
+}
+
+function stripLinks(text: string): string {
+  if (!text) return '';
+  let s = String(text);
+
+  // This matches ([label](url)) even if it spans multiple lines
+  s = s.replace(/\(\s*\[[^\]]+\]\s*\([\s\S]*?\)\s*\)/g, '');
+
+  // This matches [label](url) 
+  s = s.replace(/\[[^\]]+\]\s*\([\s\S]*?\)/g, '');
+
+  // Remove any remaining raw https links
+  s = s.replace(/https?:\/\/[^\s)]+/g, '');
+
+  return s.trim();
+}
+
+function stripLinksFromArray(arr: any): string[] {
+  if (!Array.isArray(arr)) return [];
+  return arr.map(item => stripLinks(String(item)));
 }
 
 /**
@@ -111,97 +110,44 @@ export async function analyzeRecyclability(
 ): Promise<AnalyzeResponse> {
   try {
     const openai = getOpenAIClient();
-    
-    // Parse location for user_location parameter
+
     const parsedLocation = parseLocation(location);
-    
-    // Build user_location object for web_search
-    const userLocation: any = {
-      type: 'approximate' as const,
-    };
-    
-    if (parsedLocation.city) {
-      userLocation.city = parsedLocation.city;
-    }
-    if (parsedLocation.region) {
-      userLocation.region = parsedLocation.region;
-    }
-    if (parsedLocation.country) {
-      userLocation.country = parsedLocation.country;
-    }
-    
-    // Determine material for RAG query
-    // If we have vision result, use it; otherwise we'll need to infer from context
+
+    const userLocation: any = { type: 'approximate' as const };
+    if (parsedLocation.city) userLocation.city = parsedLocation.city;
+    if (parsedLocation.region) userLocation.region = parsedLocation.region;
+    if (parsedLocation.country) userLocation.country = parsedLocation.country;
+
     let materialForRAG = visionResult?.primaryMaterial || '';
     let conditionForRAG = visionResult?.condition || '';
-    
-    // Query RAG service for local regulations
+
     let ragContext = '';
     let ragSources: string[] = [];
     let ragQueried = false;
-    
-    // Check if RAG service URL is configured
+
     const ragServiceUrl = process.env.RAG_SERVICE_URL;
-    
-    // Only query RAG if we have a material (from vision or we'll infer from context)
-    // If no vision result, we'll query RAG after determining material from context
+
     if (materialForRAG) {
-      console.log('RAG Service Status:', {
-        configured: !!ragServiceUrl,
-        url: ragServiceUrl ? 'set' : 'not set',
-        material: materialForRAG,
-        location
-      });
-      
       try {
-        const ragResult = await queryRAG(
-          materialForRAG,
-          location,
-          conditionForRAG,
-          context
-        );
-        
-        // Track that RAG was queried (even if it returned empty)
+        const ragResult = await queryRAG(materialForRAG, location, conditionForRAG, context);
         ragQueried = true;
-        
+
         if (ragResult) {
-          // Always include sources if available, even if regulations are empty
           ragSources = ragResult.sources || [];
-          
-          // Use regulations if they exist and are non-empty
           if (ragResult.regulations && ragResult.regulations.trim().length > 0) {
             ragContext = ragResult.regulations;
-            console.log('RAG query successful:', {
-              regulationsLength: ragResult.regulations.length,
-              sourcesCount: ragSources.length,
-              sources: ragSources
-            });
-          } else {
-            console.log('RAG query returned empty regulations:', {
-              regulationsLength: ragResult.regulations?.length || 0,
-              sourcesCount: ragSources.length,
-              sources: ragSources,
-              material: materialForRAG,
-              location
-            });
           }
-        } else {
-          console.log('RAG query returned null - service may be unavailable');
         }
       } catch (error) {
+        // Non-fatal: continue without ragContext
+        if (ragServiceUrl) ragQueried = true;
         console.error('RAG query error (non-fatal):', error);
-        // Continue without RAG context, but still mark as queried if we attempted it
-        if (ragServiceUrl) {
-          ragQueried = true;
-        }
       }
     }
-    
-    // Prepare the input prompt
+
     let input: string;
-    
+
     if (visionResult) {
-      // Case 1: We have vision analysis results
       input = `You are a recycling and disposal assistant. Analyze this item for recyclability:
 
 Material Analysis (from image):
@@ -215,14 +161,17 @@ User Context: ${context || 'None provided'}
 
 User Location: ${location}
 
-${ragContext ? `\nLocal Recycling Regulations (from official sources):\n${ragContext}\n\nUse these official regulations as the primary source for determining recyclability and disposal instructions.` : ''}
+${ragContext
+          ? `\nLocal Recycling Regulations (from official sources):\n${ragContext}\n\nUse these official regulations as the primary source for determining recyclability and disposal instructions.`
+          : ''
+        }
 
 Please:
 1. Determine if this item is recyclable (true/false)
 2. Identify the category it belongs to
 3. Determine which bin it should go in (recycling, landfill, compost, hazardous, or unknown)
 4. Provide clear, step-by-step instructions for proper disposal
-5. Use web search to find 3-5 nearby recycling and disposal facilities in ${location}
+5. Use web search to find 3-5 nearby recycling and disposal facilities in ${location}.
 6. Return your complete analysis as a JSON object matching this exact structure:
 {
   "isRecyclable": boolean,
@@ -238,23 +187,49 @@ Please:
     "type": string,
     "address": string,
     "url": string,
-    "notes": string
+    "notes": string,
+    "email": string,
+    "phone": string,
+    "hours": string
   }],
   "webSearchSources": string[]
 }
 
 IMPORTANT: Include a "webSearchSources" array with URLs of web pages you consulted for recycling information (not just facilities). This should include any websites you used to determine recyclability, disposal methods, or general recycling guidelines. Include the full URLs of the sources you used.
 
-Search for queries like "recycling facilities ${location}" or "${visionResult.primaryMaterial} disposal ${location}" to find local facilities.`;
+STRICT FORMATTING RULES (MANDATORY):
+- Do NOT include URLs anywhere in:
+  - "reasoning"
+  - "instructions"
+  - "materialDescription"
+  - facilities[].notes
+- Do NOT include markdown links, parenthesized URLs, or split-line links.
+- Do NOT include patterns like:
+  - [domain] (https://example.com)
+  - domain (https://example.com)
+  - https://example.com
+- If you want to reference a source in text, write ONLY the bare domain name
+  (example: tompkinscountyny.gov) with NO link and NO parentheses.
+- ALL URLs must appear ONLY in:
+  - "webSearchSources"
+  - facilities[].url
+Violating these rules is an error.
+
+Search for queries like "recycling facilities ${location}" or "${visionResult.primaryMaterial} disposal ${location}" to find local facilities. Search for queries like "recycling facilities ${location}" or "${visionResult.primaryMaterial} disposal ${location}" to find local facilities. 
+For each facility in "facilities", the "url" field must be the canonical homepage URL exactly as shown in the browser address bar of the facility’s official website. Do NOT guess URLs. Do NOT modify protocol (http/https) or add/remove "www". If the exact official website URL cannot be confidently verified, return a string "#". 
+
+For the last three fields in "facilities", try to find each facility's contact information like email address, phone number, and hours of operation. Every facility object must include all fields listed above. If email, phone, or hours are unavailable, return them as empty strings (""). Do NOT omit fields. Do NOT use null.`;
     } else {
-      // Case 2: No image, use context to determine identity
       input = `You are a recycling and disposal assistant. Analyze this item for recyclability based on the user's description.
 
 User Description: ${context || 'No description provided'}
 
 User Location: ${location}
 
-${ragContext ? `\nLocal Recycling Regulations (from official sources):\n${ragContext}\n\nUse these official regulations as the primary source for determining recyclability and disposal instructions.` : ''}
+${ragContext
+          ? `\nLocal Recycling Regulations (from official sources):\n${ragContext}\n\nUse these official regulations as the primary source for determining recyclability and disposal instructions.`
+          : ''
+        }
 
 IMPORTANT: First, identify the item from the user's description. Determine:
 - What is the item? (e.g., "plastic water bottle", "aluminum can", "cardboard box", "lithium battery")
@@ -267,14 +242,14 @@ Then:
 2. Identify the category it belongs to
 3. Determine which bin it should go in (recycling, landfill, compost, hazardous, or unknown)
 4. Provide clear, step-by-step instructions for proper disposal
-5. Use web search to find 3-5 nearby recycling and disposal facilities in ${location}
+5. Use web search to find 3-5 nearby recycling and disposal facilities in ${location}.
 6. Return your complete analysis as a JSON object matching this exact structure:
 {
   "isRecyclable": boolean,
   "category": string,
   "bin": "recycling" | "landfill" | "compost" | "hazardous" | "unknown",
   "confidence": number (0-1),
-  "materialDescription": string (describe the item based on the user's context),
+  "materialDescription": string,
   "instructions": string[],
   "reasoning": string,
   "locationUsed": string,
@@ -283,81 +258,103 @@ Then:
     "type": string,
     "address": string,
     "url": string,
-    "notes": string
+    "notes": string,
+    "email": string,
+    "phone": string,
+    "hours": string
   }],
   "webSearchSources": string[]
 }
 
 IMPORTANT: Include a "webSearchSources" array with URLs of web pages you consulted for recycling information (not just facilities). This should include any websites you used to determine recyclability, disposal methods, or general recycling guidelines. Include the full URLs of the sources you used.
 
-Search for queries like "recycling facilities ${location}" or "[material] disposal ${location}" to find local facilities.`;
+STRICT FORMATTING RULES (MANDATORY):
+- Do NOT include URLs anywhere in:
+  - "reasoning"
+  - "instructions"
+  - "materialDescription"
+  - facilities[].notes
+- Do NOT include markdown links, parenthesized URLs, or split-line links.
+- Do NOT include patterns like:
+  - [domain] (https://example.com)
+  - domain (https://example.com)
+  - https://example.com
+- If you want to reference a source in text, write ONLY the bare domain name
+  (example: tompkinscountyny.gov) with NO link and NO parentheses.
+- ALL URLs must appear ONLY in:
+  - "webSearchSources"
+  - facilities[].url
+Violating these rules is an error.
+
+
+Search for queries like "recycling facilities ${location}" or "[material] disposal ${location}" to find local facilities. For each facility in "facilities", the "url" field must be the canonical homepage URL exactly as shown in the browser address bar of the facility’s official website. Do NOT guess URLs. Do NOT modify protocol (http/https) or add/remove "www". If the exact official website URL cannot be confidently verified, return a string "#". 
+
+For the last three fields in "facilities", try to find each facility's contact information like email address, phone number, and hours of operation. Every facility object must include all fields listed above. If email, phone, or hours are unavailable, return them as empty strings (""). Do NOT omit fields. Do NOT use null.`;
     }
 
-    // Build tools array with web_search
-    const tools: any[] = [
-      {
-        type: 'web_search' as const,
-      },
-    ];
-    
-    // Add user_location if we have valid location data (more than just type)
+    const tools: any[] = [{ type: 'web_search' as const }];
     if (Object.keys(userLocation).length > 1) {
       tools[0].user_location = userLocation;
     }
-    
-    // Call Responses API with web_search tool
+
     const response = await openai.responses.create({
       model: 'gpt-4.1',
-      tools: tools,
-      input: input,
+      tools,
+      input,
     });
 
-    // Extract output text from response
-    // Responses API returns output_text directly
     const outputText = response.output_text || '';
-    
-    if (!outputText) {
-      throw new Error('No output text from Responses API');
-    }
+    if (!outputText) throw new Error('No output text from Responses API');
 
-    // Parse JSON from response
     const parsed = extractJSONFromResponse(outputText);
 
-    // Extract web search sources
     const webSearchSources: string[] = Array.isArray(parsed.webSearchSources)
-      ? parsed.webSearchSources.filter((url: any) => typeof url === 'string' && url.trim().length > 0)
+      ? parsed.webSearchSources
+        .filter((u: any) => typeof u === 'string')
+        .map((u: string) => u.trim())
+        .filter((u: string) => u.length > 0)
       : [];
 
-    // Validate and structure the response
-    const facilities: Facility[] = Array.isArray(parsed.facilities)
-      ? parsed.facilities.map((f: any) => ({
-          name: f.name || 'Unknown Facility',
-          type: f.type || 'Recycling Center',
-          address: f.address || 'Address not available',
-          url: f.url || '#',
-          notes: f.notes || '',
+    // Sanitize ALL user-visible strings here (single source of truth)
+    const sanitizedFacilities: Facility[] = Array.isArray(parsed.facilities)
+      ? parsed.facilities
+        .map((f: any) => ({
+          name: stripLinks(f?.name || 'Unknown Facility'),
+          type: stripLinks(f?.type || 'Recycling Center'),
+          address: stripLinks(f?.address || 'Address not available'),
+          url: normalizeFacilityUrl(f.url) || '#', // URLs allowed here
+          notes: stripLinks(f?.notes || ''),
+          email: typeof f.email === 'string' ? f.email : '',
+        phone: typeof f.phone === 'string' ? f.phone : '', //extra check since phone numbers + hours could be returned as a weird type
+        hours: typeof f.hours === 'string' ? f.hours : '',
         }))
+        .slice(0, 5)
       : [];
 
-    // Limit to 5 facilities
-    const limitedFacilities = facilities.slice(0, 5);
-
-    return {
+    const result: AnalyzeResponse = {
       isRecyclable: Boolean(parsed.isRecyclable),
-      category: parsed.category || visionResult?.category || 'unknown',
+      category: stripLinks(parsed.category || visionResult?.category || 'unknown'),
       bin: parsed.bin || 'unknown',
       confidence: typeof parsed.confidence === 'number' ? parsed.confidence : 0.5,
-      materialDescription: parsed.materialDescription || visionResult?.shortDescription || context || 'Item description not available',
-      instructions: Array.isArray(parsed.instructions) ? parsed.instructions : [],
-      reasoning: parsed.reasoning || 'Analysis completed',
-      locationUsed: parsed.locationUsed || location,
-      facilities: limitedFacilities,
-      ragSources: ragSources.length > 0 ? ragSources : undefined,
-      ragQueried: ragQueried,
+
+      materialDescription: stripLinks(
+        parsed.materialDescription || visionResult?.shortDescription || context || 'Item description not available'
+      ),
+
+      instructions: stripLinksFromArray(parsed.instructions),
+      reasoning: stripLinks(parsed.reasoning || 'Analysis completed'),
+      locationUsed: stripLinks(parsed.locationUsed || location),
+
+      facilities: sanitizedFacilities,
+
+      ragSources: Array.isArray(ragSources) && ragSources.length > 0 ? ragSources : undefined,
+      ragQueried,
       webSearchSources: webSearchSources.length > 0 ? webSearchSources : undefined,
     };
+
+    return result;
   } catch (error) {
-    console.error('GPT-5 service error:', error);
+    console.error('GPT service error:', error);
     throw new Error(
       `Failed to analyze recyclability: ${error instanceof Error ? error.message : 'Unknown error'}`
     );

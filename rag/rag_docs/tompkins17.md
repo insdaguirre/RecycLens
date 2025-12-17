@@ -98,8 +98,8 @@ SitemapNewsletterYouTubeSIREN
 English (United States) Select this as your preferred languageSpanish Select this as your preferred languageFrench Select this as your preferred languageChinese (Simplified) Select this as your preferred languageChinese (Traditional) Select this as your preferred languageRussian Select this as your preferred languageVietnamese Select this as your preferred languageArabic Select this as your preferred language
 
 
-
-            Select a language to translate to
+
+            Select a language to translate to
 		
 
 
@@ -114,8 +114,8 @@ English (United States) Select this as your preferred languageSpanish Select thi
 
 
 
-
-					Tompkins County - Home - Logo
+
+					Tompkins County - Home - Logo
 					
 
 
@@ -197,9 +197,9 @@ Employment OpportunitiesCivil ServiceBenefitsEmployee LeavesContracts/Salary Sca
 
 What is Unlawful Discrimination?Fair HousingEqual Employment OpportunityHuman Rights K-12 Arts GalleryVolunteers and InternsNYS Division of Human Rights BrochuresWorkplace ResourcesCommunity ReferralsLEP/LAPHuman Rights Commission Advisory BoardEmail Tompkins County Office of Human RightsInformation Technology ServicesIthaca-Tompkins County Transportation CouncilSub-menu
 
-About ITCTCMeeting ScheduleCivil RightsPublic ParticipationUnified Planning Work Program (Simplified Statement of Work)Transportation Improvement Program (TIP)2045 Long Range Transportation PlanAnnual Listing of Federal Aid Project ObligationCompleted Projects, Studies and MapsStatisticsMunicipal Transportation SnapshotsTransportation LinksEmail ITCTCPlanning and SustainabilitySub-menu
+About ITCTCMeeting ScheduleCivil RightsPublic ParticipationUnified Planning Work Program (Simplified Statement of Work)Transportation Improvement Program (TIP)2045 Long Range Transportation PlanAnnual Listing of Federal Aid Project ObligationCompleted Projects, Studies and MapsStatisticsMunicipal Transportation SnapshotsTransportation LinksEmail ITCTCMotor VehiclesPlanning and SustainabilitySub-menu
 
-Advisory BoardsBusiness Energy AdvisorsClimate Adaptation and ResiliencyCommunity PlanningComprehensive PlanThe EconomyEnergy and Greenhouse Gas EmissionsHousingMaps and DataNatural Resources and AgricultureCounty OperationsPlanning Department StaffSustainabilityTourismTransportationWater ResourcesEmail Planning and Sustainability DepartmentMotor VehiclesProbation and Community JusticeSub-menu
+Advisory BoardsBusiness Energy AdvisorsClimate Adaptation and ResiliencyCommunity PlanningComprehensive PlanThe EconomyEnergy and Greenhouse Gas EmissionsHousingMaps and DataNatural Resources and AgricultureCounty OperationsPlanning Department StaffSustainabilityTourismTransportationWater ResourcesEmail Planning and Sustainability DepartmentProbation and Community JusticeSub-menu
 
 Annual ReportsMandated ServicesCriminal Adult ServicesJuvenile ServicesGraduated ResponsesESSOSpecialized ProgramsVictim ServicesResourcesCareer OpportunitiesEmail Probation and Community Justice DepartmentTransparency HubRecycling & Materials ManagementSub-menu
 
@@ -309,8 +309,8 @@ Contact Us
 
 
 
-
-									             
+
+									             
 									            
 
 	In This Section
@@ -352,19 +352,19 @@ The Tompkins County Department of Recycling and Materials Management complies wi
 Chapter 140 of the Tompkins County Code regulates solid waste and recyclable materials in Tompkins County. The Code is divided into 4 sections called Articles:
 Article I: Mandatory Recycling
 
-Declaration of Purpose:
+Declaration of Purpose:
 A. Institute a plan for the management of recyclables and reusables generated or originated in Tompkins County, to promote the safety, health, and well-being of persons and property within Tompkins County, and to B. Implement the express policy of the State of New York encouraging waste stream reduction through recycling.
 
 Article II: Trash Tag System
 
-Declaration of Purpose:
+Declaration of Purpose:
 This local law prescribes the methods of payment for disposal of solid waste through private and municipal solid waste haulers and encourages the recycling of solid waste.
 
 Article III: Hauler Licensing
 Article IV: Disposal
 
-Declaration of Purpose:
-The purpose and intent of this local law is to prohibit the disposal of solid waste at any location other than at properly authorized facilities or sites and to prevent the unauthorized use of dumpsters and other solid waste containers.
+Declaration of Purpose:
+The purpose and intent of this local law is to prohibit the disposal of solid waste at any location other than at properly authorized facilities or sites and to prevent the unauthorized use of dumpsters and other solid waste containers.
 The adoption and vigorous enforcement of this local law is intended to be an effective deterrent to the dumping of solid waste. This local law shall be liberally construed to effectuate its objectives and purposes.
 
 Under the New York State DEC 360 Permit(PDF, 159KB), the Tompkins County Recycling and Solid Waste Center has authorization ‘to receive recyclables for processing and marketing, and construction and demolition debris and other non-recyclables [that are] disposed of at a landfill. Yard waste [is] received and transferred to a facility as noted in the approved Solid Waste Management Plan.
@@ -392,17 +392,17 @@ Logo
 Share & Connect
  
 
-Like us on Facebook
+Like us on Facebook
 
 
 
 
-Connect on LinkedIn
+Connect on LinkedIn
 
 
 
 
-Live and Archived YouTube Videos
+Live and Archived YouTube Videos
 
 
 
@@ -410,59 +410,59 @@ Live and Archived YouTube Videos
 Quick Links
  
 
-Contact Us
+Contact Us
 
 
 
 
-Diversity Statement
+Diversity Statement
 
 
 
 
-County Intranet
+County Intranet
 
 
 
 
-Browse Photo Library
+Browse Photo Library
 
 
 
 
  
 
-About TompkinsCountyNY.gov
+About TompkinsCountyNY.gov
 
 
 
 
-Civil Rights
+Civil Rights
 
 
 
 
-Disclaimer and Privacy Policy
+Disclaimer and Privacy Policy
 
 
 
 
-FOIL
+FOIL
 
 
 
 
-Website Accessibility
+Website Accessibility
 
 
 
 
-Website Policies
+Website Policies
 
 
 
 
-Site Translation and Language Resources
+Site Translation and Language Resources
 
 
 
@@ -477,7 +477,7 @@ Site Translation and Language Resources
 Disclaimer & Privacy Policy | Website Policies | Sitemap | Non-Discrimination
 
 
-
+
                                     © 2025 Tompkins County | Powered by Granicus
 
 

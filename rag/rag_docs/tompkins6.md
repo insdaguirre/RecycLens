@@ -98,8 +98,8 @@ SitemapNewsletterYouTubeSIREN
 English (United States) Select this as your preferred languageSpanish Select this as your preferred languageFrench Select this as your preferred languageChinese (Simplified) Select this as your preferred languageChinese (Traditional) Select this as your preferred languageRussian Select this as your preferred languageVietnamese Select this as your preferred languageArabic Select this as your preferred language
 
 
-
-            Select a language to translate to
+
+            Select a language to translate to
 		
 
 
@@ -114,8 +114,8 @@ English (United States) Select this as your preferred languageSpanish Select thi
 
 
 
-
-					Tompkins County - Home - Logo
+
+					Tompkins County - Home - Logo
 					
 
 
@@ -197,9 +197,9 @@ Employment OpportunitiesCivil ServiceBenefitsEmployee LeavesContracts/Salary Sca
 
 What is Unlawful Discrimination?Fair HousingEqual Employment OpportunityHuman Rights K-12 Arts GalleryVolunteers and InternsNYS Division of Human Rights BrochuresWorkplace ResourcesCommunity ReferralsLEP/LAPHuman Rights Commission Advisory BoardEmail Tompkins County Office of Human RightsInformation Technology ServicesIthaca-Tompkins County Transportation CouncilSub-menu
 
-About ITCTCMeeting ScheduleCivil RightsPublic ParticipationUnified Planning Work Program (Simplified Statement of Work)Transportation Improvement Program (TIP)2045 Long Range Transportation PlanAnnual Listing of Federal Aid Project ObligationCompleted Projects, Studies and MapsStatisticsMunicipal Transportation SnapshotsTransportation LinksEmail ITCTCPlanning and SustainabilitySub-menu
+About ITCTCMeeting ScheduleCivil RightsPublic ParticipationUnified Planning Work Program (Simplified Statement of Work)Transportation Improvement Program (TIP)2045 Long Range Transportation PlanAnnual Listing of Federal Aid Project ObligationCompleted Projects, Studies and MapsStatisticsMunicipal Transportation SnapshotsTransportation LinksEmail ITCTCMotor VehiclesPlanning and SustainabilitySub-menu
 
-Advisory BoardsBusiness Energy AdvisorsClimate Adaptation and ResiliencyCommunity PlanningComprehensive PlanThe EconomyEnergy and Greenhouse Gas EmissionsHousingMaps and DataNatural Resources and AgricultureCounty OperationsPlanning Department StaffSustainabilityTourismTransportationWater ResourcesEmail Planning and Sustainability DepartmentMotor VehiclesProbation and Community JusticeSub-menu
+Advisory BoardsBusiness Energy AdvisorsClimate Adaptation and ResiliencyCommunity PlanningComprehensive PlanThe EconomyEnergy and Greenhouse Gas EmissionsHousingMaps and DataNatural Resources and AgricultureCounty OperationsPlanning Department StaffSustainabilityTourismTransportationWater ResourcesEmail Planning and Sustainability DepartmentProbation and Community JusticeSub-menu
 
 Annual ReportsMandated ServicesCriminal Adult ServicesJuvenile ServicesGraduated ResponsesESSOSpecialized ProgramsVictim ServicesResourcesCareer OpportunitiesEmail Probation and Community Justice DepartmentTransparency HubRecycling & Materials ManagementSub-menu
 
@@ -309,8 +309,8 @@ Contact Us
 
 
 
-
-									             
+
+									             
 									            
 
 	In This Section
@@ -348,7 +348,7 @@ Contact Us
 Licensed Haulers
 Updated August 2025
 Tompkins County businesses and residents have the option to hire a licensed hauler to remove trash from their property. See below for a list of licensed haulers.
-
+
 Haulers License applications are available on the Permits and Fees page.
 Regular Residential Pickup
 Note: All trash set out for collection in Tompkins County must have a trash tag affixed to the bag or can. Learn more information about Trash Tags.
@@ -363,32 +363,32 @@ Phone
 
 
 Casella Waste Systems, Inc.
-P.O. Box 349
+P.O. Box 349
 Newfield, NY 14867
 607-277-5361
 
 
 Doug’s Trash Removal
-105 West South St.
+105 West South St.
 Groton, NY 13073
 607-898-3220
 www.dougstrash.com
 
 
 Hilliard Trash Removal
-1341 Tollgate Hill Rd.
+1341 Tollgate Hill Rd.
 Locke, NY 13092
 315-497-3279
 
 
 Red Line Disposal
-4775 State Rt. 79
+4775 State Rt. 79
 Burdett, NY 14818
 607-387-4341
 
 
 Shutts Family Cleaning Crew
-6835 East Keeney Rd. Ext.
+6835 East Keeney Rd. Ext.
 Cuyler, NY 13158
 315-877-0186
 
@@ -406,93 +406,93 @@ Phone
 
 
 4-Season Landscaping
-149 South Applegate Rd.
+149 South Applegate Rd.
 Ithaca, NY 14850
 607-272-1504
 
 
 Casella Waste Systems, Inc.
-P.O. Box 349
+P.O. Box 349
 Newfield, NY 14867
 607-277-5361
 
 
 CP Rolloff Dumpsters
-6485 Rt. 41
+6485 Rt. 41
 Homer, NY 13077
 607-299-4184
 
 
 Doug’s Trash Removal
-105 West South St.
+105 West South St.
 Groton, NY 13073
 607-898-3220
 www.dougstrash.com
 
 
 Holden Dumpsters
-1929 County Rd. 139
+1929 County Rd. 139
 Ovid, NY 14521
 607-869-5096
 
 
 Leach’s Custom Trash Service
-1834 Rt. 13
+1834 Rt. 13
 Cortland, NY 13045
 607-753-7412
 
 
 Mansaz Dumpsters (Residential)
-409 Manor Lane
+409 Manor Lane
 Newfield NY 14867
 607-216-8742
 
 
 MarCon Companies, Inc.
-6432 Baird Ave.
+6432 Baird Ave.
 Syracuse, NY 13206
 315-463-0848
 
 
 Oaks Dumpster Rental
-147 South Union St.
+147 South Union St.
 Spencerport, NY 14559
 585-225-6257
 
 
-Red Line Disposal /
+Red Line Disposal /
 Elmore Dumpster Rental
-4775 State Rt. 79
+4775 State Rt. 79
 Burdett, NY 14818
 607-387-4341
 
 
 Robinson Rolloff, LLC
-3486 Franklin Street Rd.
+3486 Franklin Street Rd.
 Auburn, NY 13021
 315-252-4510
 
 
 SDM Landscaping
-P.O. Box 4925
+P.O. Box 4925
 Ithaca, NY 14850
 607-279-5609
 
 
 Servpro of Broome, Tompkins, and Tioga Counties
-P.O. Box 654
+P.O. Box 654
 Binghamton, NY 13902
 607-722-2262
 
 
 Shane’s Handyman Service
-6485 Rt. 41
+6485 Rt. 41
 Homer, NY 13077
 607-299-4676
 
 
 Waste Management
-4521 Steelway Blvd. North
+4521 Steelway Blvd. North
 Liverpool, NY 13090
 315-457-0003
 
@@ -511,73 +511,73 @@ Phone
 
 
 Clear It Out Junk Removal
-3905 Mathews Rd.
+3905 Mathews Rd.
 Burdett, NY 14818
 607-882-4223
 
 
 CP Rolloff Dumpsters
-6485 Rt. 41
+6485 Rt. 41
 Homer, NY 13077
 607-299-4184
 
 
 Expert Clutter Removal Service
-1579 Bush Hill Rd.
+1579 Bush Hill Rd.
 Port Byron, NY 13140
 315-730-6370
 
 
 FLX Junk Removal & Hauling
-106 West 8th St.
+106 West 8th St.
 Watkins Glen, NY 14891
 607-367-6388
 
 
 Hilliard Trash Service
-1341 Tollgate Rd.
+1341 Tollgate Rd.
 Locke, NY 13092
 315-497-3279
 
 
 JD’s Lawn Maintenance
-15 John St.
+15 John St.
 Ithaca, NY 14850
 607-592-2046
 
 
 Mansaz
-409 Manor Lane
+409 Manor Lane
 Newfield, NY 14867
 607-216-8742
 
 
  R-H Junk Removal
-55 Cemetary Ln.
+55 Cemetary Ln.
 Freeville, NY 13068
 607-269-7640
 
 
 Robinson Rolloff, LLC
-3486 Franklin Street Rd.
+3486 Franklin Street Rd.
 Auburn, NY 13021
 315-252-4510
 
 
 Servpro of Broome, Tompkins, and Tioga Counties
-P.O. Box 654
+P.O. Box 654
 Binghamton, NY 13902
 607-722-2262
 
 
 Shane’s Handyman Service
-6485 Rt. 41
+6485 Rt. 41
 Homer, NY 13077
 607-299-4676
 
 
 Top Hat Clutter
-257 North Main St.
+257 North Main St.
 Moravia, NY 13118
 315-730-2118
 
@@ -596,13 +596,13 @@ Phone
 
 
 City of Ithaca
-108 East Green St.
+108 East Green St.
 Ithaca, NY 14850
 607-272-1718
 
 
 Village of Cayuga Heights
-836 Hanshaw Rd.
+836 Hanshaw Rd.
 Ithaca, NY 14850
 607-257-1238
 
@@ -620,13 +620,13 @@ Phone
 
 
 Casella Waste Systems, Inc.
-P.O. Box 349
+P.O. Box 349
 Newfield, NY 14867
 607-277-5361
 
 
 Natural Upcycling
-1818 Linwood Rd.
+1818 Linwood Rd.
 Linwood, NY 14486
 585-584-3122
 
@@ -656,17 +656,17 @@ Logo
 Share & Connect
  
 
-Like us on Facebook
+Like us on Facebook
 
 
 
 
-Connect on LinkedIn
+Connect on LinkedIn
 
 
 
 
-Live and Archived YouTube Videos
+Live and Archived YouTube Videos
 
 
 
@@ -674,59 +674,59 @@ Live and Archived YouTube Videos
 Quick Links
  
 
-Contact Us
+Contact Us
 
 
 
 
-Diversity Statement
+Diversity Statement
 
 
 
 
-County Intranet
+County Intranet
 
 
 
 
-Browse Photo Library
+Browse Photo Library
 
 
 
 
  
 
-About TompkinsCountyNY.gov
+About TompkinsCountyNY.gov
 
 
 
 
-Civil Rights
+Civil Rights
 
 
 
 
-Disclaimer and Privacy Policy
+Disclaimer and Privacy Policy
 
 
 
 
-FOIL
+FOIL
 
 
 
 
-Website Accessibility
+Website Accessibility
 
 
 
 
-Website Policies
+Website Policies
 
 
 
 
-Site Translation and Language Resources
+Site Translation and Language Resources
 
 
 
@@ -741,7 +741,7 @@ Site Translation and Language Resources
 Disclaimer & Privacy Policy | Website Policies | Sitemap | Non-Discrimination
 
 
-
+
                                     © 2025 Tompkins County | Powered by Granicus
 
 

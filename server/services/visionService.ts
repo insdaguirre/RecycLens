@@ -15,13 +15,13 @@ function getOpenAIClient() {
  */
 export async function analyzeImage(imageBase64: string): Promise<VisionResponse> {
   // Keep data URL prefix for chat completions API
-  const imageDataUrl = imageBase64.startsWith('data:') 
-    ? imageBase64 
+  const imageDataUrl = imageBase64.startsWith('data:')
+    ? imageBase64
     : `data:image/jpeg;base64,${imageBase64}`;
 
   try {
     const openai = getOpenAIClient();
-    
+
     // Prepare system message
     const systemMessage = `You are an expert recycling and materials classifier specializing in identifying batteries, electronics, and hazardous materials.
 
@@ -138,7 +138,7 @@ Now analyze this image and return the material analysis as JSON:`;
     // Parse JSON response (handle markdown code blocks if present)
     const cleanedContent = content.replace(/```json\n?|\n?```/g, '').trim();
     const parsed = JSON.parse(cleanedContent);
-    
+
     // Validate and return structured response
     return {
       primaryMaterial: parsed.primaryMaterial || 'Unknown',

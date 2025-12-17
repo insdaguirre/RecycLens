@@ -6,18 +6,53 @@ interface ResultsPanelProps {
   isVisible: boolean;
 }
 
+function stripLinks(text: string): string {
+  if (!text) return '';
+
+  let s = String(text);
+
+  // 1. Heavy-duty match for: ([label](url)) 
+  // This looks for a ( followed by [something] followed by (anything until the last matching parenthesis)
+  // The [\s\S]*? allows it to jump over newlines.
+  s = s.replace(/\(\s*\[[^\]]+\]\s*\([\s\S]*?\)\s*\)/g, '');
+
+  // 2. Heavy-duty match for standard markdown: [label](url)
+  s = s.replace(/\[[^\]]+\]\s*\([\s\S]*?\)/g, '');
+
+  // 3. Remove any remaining standalone URLs (even with query params)
+  s = s.replace(/https?:\/\/[^\s)]+/g, '');
+
+  // 4. Remove angle brackets <url>
+  s = s.replace(/<[^>]+>/g, '');
+
+  // 5. Cleanup citations like [1] or [cite...]
+  s = s.replace(/\[\s*cite[^\]]*\]/gi, '');
+  s = s.replace(/\[\d+\]/g, '');
+
+  // Final Cleanup
+  return s
+    .replace(/\(\s*\)/g, '')         // Remove leftover empty parens
+    .replace(/[ \t]+\n/g, '\n')      // Remove trailing whitespace
+    .replace(/\n{3,}/g, '\n\n')      // Collapse extra newlines
+    .replace(/[ \t]{2,}/g, ' ')      // Collapse extra spaces
+    .trim();
+}
+
 export default function ResultsPanel({ data, isVisible }: ResultsPanelProps) {
-  if (!isVisible) {
-    return null;
-  }
+  if (!isVisible) return null;
+
+  const reasoningRaw =
+    data.reasoning ||
+    (data.isRecyclable ? 'This item can be recycled' : 'This item cannot be recycled');
+
+  const reasoning = stripLinks(reasoningRaw);
 
   return (
     <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 transition-all duration-700 ease-in-out flex flex-col min-h-[600px]">
       <div className="text-center mb-6">
         <div
-          className={`w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center ${
-            data.isRecyclable ? 'bg-green-100' : 'bg-red-100'
-          }`}
+          className={`w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center ${data.isRecyclable ? 'bg-green-100' : 'bg-red-100'
+            }`}
         >
           {data.isRecyclable ? (
             <Check className="w-10 h-10 text-green-600" />
@@ -25,21 +60,19 @@ export default function ResultsPanel({ data, isVisible }: ResultsPanelProps) {
             <X className="w-10 h-10 text-red-600" />
           )}
         </div>
+
         <h3
-          className={`text-3xl font-light mb-2 ${
-            data.isRecyclable ? 'text-green-600' : 'text-red-600'
-          }`}
+          className={`text-3xl font-light mb-2 ${data.isRecyclable ? 'text-green-600' : 'text-red-600'
+            }`}
         >
           {data.isRecyclable ? 'Recyclable' : 'Not Recyclable'}
         </h3>
-        <p className="text-gray-600 text-sm leading-relaxed mb-4">
-          {data.reasoning || (data.isRecyclable 
-            ? 'This item can be recycled' 
-            : 'This item cannot be recycled')}
+
+        <p className="text-gray-600 text-sm leading-relaxed mb-4 whitespace-pre-line">
+          {reasoning}
         </p>
       </div>
 
-      {/* Category */}
       <div className="mb-6">
         <p className="text-xs font-medium text-gray-500 mb-3">CATEGORY</p>
         <div className="flex flex-wrap gap-2">
@@ -51,27 +84,25 @@ export default function ResultsPanel({ data, isVisible }: ResultsPanelProps) {
           </span>
           {data.materialDescription && (
             <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
-              {data.materialDescription}
+              {stripLinks(data.materialDescription)}
             </span>
           )}
         </div>
       </div>
 
-      {/* Instructions */}
       {data.instructions && data.instructions.length > 0 && (
         <div className="mb-6 pt-6 border-t border-gray-100">
           <p className="text-xs font-medium text-gray-500 mb-3">INSTRUCTIONS</p>
           <ol className="list-decimal list-inside space-y-2">
             {data.instructions.map((instruction, index) => (
               <li key={index} className="text-sm text-gray-700 leading-relaxed">
-                {instruction}
+                {stripLinks(instruction)}
               </li>
             ))}
           </ol>
         </div>
       )}
 
-      {/* Confidence */}
       <div className="pt-6 border-t border-gray-100 mb-6">
         <p className="text-xs font-medium text-gray-500 mb-2">CONFIDENCE</p>
         <div className="flex items-center gap-2">
@@ -86,8 +117,6 @@ export default function ResultsPanel({ data, isVisible }: ResultsPanelProps) {
           </span>
         </div>
       </div>
-
     </div>
   );
 }
-

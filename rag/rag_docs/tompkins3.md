@@ -98,8 +98,8 @@ SitemapNewsletterYouTubeSIREN
 English (United States) Select this as your preferred languageSpanish Select this as your preferred languageFrench Select this as your preferred languageChinese (Simplified) Select this as your preferred languageChinese (Traditional) Select this as your preferred languageRussian Select this as your preferred languageVietnamese Select this as your preferred languageArabic Select this as your preferred language
 
 
-
-            Select a language to translate to
+
+            Select a language to translate to
 		
 
 
@@ -114,8 +114,8 @@ English (United States) Select this as your preferred languageSpanish Select thi
 
 
 
-
-					Tompkins County - Home - Logo
+
+					Tompkins County - Home - Logo
 					
 
 
@@ -197,9 +197,9 @@ Employment OpportunitiesCivil ServiceBenefitsEmployee LeavesContracts/Salary Sca
 
 What is Unlawful Discrimination?Fair HousingEqual Employment OpportunityHuman Rights K-12 Arts GalleryVolunteers and InternsNYS Division of Human Rights BrochuresWorkplace ResourcesCommunity ReferralsLEP/LAPHuman Rights Commission Advisory BoardEmail Tompkins County Office of Human RightsInformation Technology ServicesIthaca-Tompkins County Transportation CouncilSub-menu
 
-About ITCTCMeeting ScheduleCivil RightsPublic ParticipationUnified Planning Work Program (Simplified Statement of Work)Transportation Improvement Program (TIP)2045 Long Range Transportation PlanAnnual Listing of Federal Aid Project ObligationCompleted Projects, Studies and MapsStatisticsMunicipal Transportation SnapshotsTransportation LinksEmail ITCTCPlanning and SustainabilitySub-menu
+About ITCTCMeeting ScheduleCivil RightsPublic ParticipationUnified Planning Work Program (Simplified Statement of Work)Transportation Improvement Program (TIP)2045 Long Range Transportation PlanAnnual Listing of Federal Aid Project ObligationCompleted Projects, Studies and MapsStatisticsMunicipal Transportation SnapshotsTransportation LinksEmail ITCTCMotor VehiclesPlanning and SustainabilitySub-menu
 
-Advisory BoardsBusiness Energy AdvisorsClimate Adaptation and ResiliencyCommunity PlanningComprehensive PlanThe EconomyEnergy and Greenhouse Gas EmissionsHousingMaps and DataNatural Resources and AgricultureCounty OperationsPlanning Department StaffSustainabilityTourismTransportationWater ResourcesEmail Planning and Sustainability DepartmentMotor VehiclesProbation and Community JusticeSub-menu
+Advisory BoardsBusiness Energy AdvisorsClimate Adaptation and ResiliencyCommunity PlanningComprehensive PlanThe EconomyEnergy and Greenhouse Gas EmissionsHousingMaps and DataNatural Resources and AgricultureCounty OperationsPlanning Department StaffSustainabilityTourismTransportationWater ResourcesEmail Planning and Sustainability DepartmentProbation and Community JusticeSub-menu
 
 Annual ReportsMandated ServicesCriminal Adult ServicesJuvenile ServicesGraduated ResponsesESSOSpecialized ProgramsVictim ServicesResourcesCareer OpportunitiesEmail Probation and Community Justice DepartmentTransparency HubRecycling & Materials ManagementSub-menu
 
@@ -309,8 +309,8 @@ Contact Us
 
 
 
-
-									             
+
+									             
 									            
 
 	In This Section
@@ -362,54 +362,54 @@ SIGN UP FOR THE FOOD SCRAPS RECYCLING NEWSLETTER
 Drop Spots
 
 Users can bring up to 10 gallons of food scraps and paper napkins & towels per day, free of charge, to one of our Drop Spots:
-Recycling & Solid Waste Center
-160 Commercial Ave., Ithaca
+Recycling & Solid Waste Center
+160 Commercial Ave., Ithaca
 Open Mon - Sat from 7am - 3:30pm
-Brooktondale Community Center
-522 Valley Rd.
+Brooktondale Community Center
+522 Valley Rd.
 Open every Tuesday from 4pm - 6pm
-Cayuga Compost
-3225 Agard Rd., Trumansburg
+Cayuga Compost
+3225 Agard Rd., Trumansburg
 Open 24 hours a day
-Cayuga Heights Village Office
-836 Hanshaw Rd.
+Cayuga Heights Village Office
+836 Hanshaw Rd.
 Open every Sunday from 11am - 3pm
-Cornell Cooperative Extension
-615 Willow Ave., Ithaca
+Cornell Cooperative Extension
+615 Willow Ave., Ithaca
 Open every Sunday from 10am - 2pm
-Danby Town Hall
-1830 Danby Rd. (Route 96B)
+Danby Town Hall
+1830 Danby Rd. (Route 96B)
 Open every Saturday from 9AM-Noon
-Dryden Town Highway Department
-61 E. Main St. (Rt. 392)
+Dryden Town Highway Department
+61 E. Main St. (Rt. 392)
 Open every Saturday from 9am - Noon
-East Hill Plaza - Ithaca
-Pine Tree Rd. (Next to Walgreens)
-Open every Saturday from 11am - 2pm
+East Hill Plaza - Ithaca
+Pine Tree Rd. (Next to Walgreens)
+Open every Saturday from 11am - 2pm
 Open May-October Wednesdays 3pm-6pm
-Enfield Town Clerk
-168 Enfield Main Rd
+Enfield Town Clerk
+168 Enfield Main Rd
 Now a Compost Club-Register Below
-Groton Town Clerk’s Office
-101 Conger Boulevard
+Groton Town Clerk’s Office
+101 Conger Boulevard
 Open every Saturday 9am-11am
-Hancock Street
-Corner of Fifth and Hancock Streets, Ithaca
+Hancock Street
+Corner of Fifth and Hancock Streets, Ithaca
 Open every Wednesday from 4pm - 6pm
-Lansing Village Office
-2405 N. Triphammer Rd.
+Lansing Village Office
+2405 N. Triphammer Rd.
 Open every Saturday from 10am - 1pm
-Newfield Town Hall
-166 Main Street
+Newfield Town Hall
+166 Main Street
 Open every Thursday from 4pm - 6pm
-Tompkins County Highway Department
-170 Bostwick Rd, Ithaca
+Tompkins County Highway Department
+170 Bostwick Rd, Ithaca
 Open every Saturday from 9am - Noon
-Trumansburg Village Public Works
-Corey Street (next to Farmers Market)
+Trumansburg Village Public Works
+Corey Street (next to Farmers Market)
 Open every Saturday from 9am - Noon
 Your browser does not support inline frames.
-
+
 Please visit https://www.google.com/maps/d/embed?mid=1pYJ8O5d16qpZmrYwrY-3f9K6K7A
 
 
@@ -472,7 +472,7 @@ Using a kitchen caddy or transport container is not required.
 
 
 Your browser does not support inline frames.
-
+
 Please visit https://www.youtube.com/embed/DsZZ_0e471g
 
 
@@ -543,17 +543,17 @@ Logo
 Share & Connect
  
 
-Like us on Facebook
+Like us on Facebook
 
 
 
 
-Connect on LinkedIn
+Connect on LinkedIn
 
 
 
 
-Live and Archived YouTube Videos
+Live and Archived YouTube Videos
 
 
 
@@ -561,59 +561,59 @@ Live and Archived YouTube Videos
 Quick Links
  
 
-Contact Us
+Contact Us
 
 
 
 
-Diversity Statement
+Diversity Statement
 
 
 
 
-County Intranet
+County Intranet
 
 
 
 
-Browse Photo Library
+Browse Photo Library
 
 
 
 
  
 
-About TompkinsCountyNY.gov
+About TompkinsCountyNY.gov
 
 
 
 
-Civil Rights
+Civil Rights
 
 
 
 
-Disclaimer and Privacy Policy
+Disclaimer and Privacy Policy
 
 
 
 
-FOIL
+FOIL
 
 
 
 
-Website Accessibility
+Website Accessibility
 
 
 
 
-Website Policies
+Website Policies
 
 
 
 
-Site Translation and Language Resources
+Site Translation and Language Resources
 
 
 
@@ -628,7 +628,7 @@ Site Translation and Language Resources
 Disclaimer & Privacy Policy | Website Policies | Sitemap | Non-Discrimination
 
 
-
+
                                     © 2025 Tompkins County | Powered by Granicus
 
 

@@ -98,8 +98,8 @@ SitemapNewsletterYouTubeSIREN
 English (United States) Select this as your preferred languageSpanish Select this as your preferred languageFrench Select this as your preferred languageChinese (Simplified) Select this as your preferred languageChinese (Traditional) Select this as your preferred languageRussian Select this as your preferred languageVietnamese Select this as your preferred languageArabic Select this as your preferred language
 
 
-
-            Select a language to translate to
+
+            Select a language to translate to
 		
 
 
@@ -114,8 +114,8 @@ English (United States) Select this as your preferred languageSpanish Select thi
 
 
 
-
-					Tompkins County - Home - Logo
+
+					Tompkins County - Home - Logo
 					
 
 
@@ -197,9 +197,9 @@ Employment OpportunitiesCivil ServiceBenefitsEmployee LeavesContracts/Salary Sca
 
 What is Unlawful Discrimination?Fair HousingEqual Employment OpportunityHuman Rights K-12 Arts GalleryVolunteers and InternsNYS Division of Human Rights BrochuresWorkplace ResourcesCommunity ReferralsLEP/LAPHuman Rights Commission Advisory BoardEmail Tompkins County Office of Human RightsInformation Technology ServicesIthaca-Tompkins County Transportation CouncilSub-menu
 
-About ITCTCMeeting ScheduleCivil RightsPublic ParticipationUnified Planning Work Program (Simplified Statement of Work)Transportation Improvement Program (TIP)2045 Long Range Transportation PlanAnnual Listing of Federal Aid Project ObligationCompleted Projects, Studies and MapsStatisticsMunicipal Transportation SnapshotsTransportation LinksEmail ITCTCPlanning and SustainabilitySub-menu
+About ITCTCMeeting ScheduleCivil RightsPublic ParticipationUnified Planning Work Program (Simplified Statement of Work)Transportation Improvement Program (TIP)2045 Long Range Transportation PlanAnnual Listing of Federal Aid Project ObligationCompleted Projects, Studies and MapsStatisticsMunicipal Transportation SnapshotsTransportation LinksEmail ITCTCMotor VehiclesPlanning and SustainabilitySub-menu
 
-Advisory BoardsBusiness Energy AdvisorsClimate Adaptation and ResiliencyCommunity PlanningComprehensive PlanThe EconomyEnergy and Greenhouse Gas EmissionsHousingMaps and DataNatural Resources and AgricultureCounty OperationsPlanning Department StaffSustainabilityTourismTransportationWater ResourcesEmail Planning and Sustainability DepartmentMotor VehiclesProbation and Community JusticeSub-menu
+Advisory BoardsBusiness Energy AdvisorsClimate Adaptation and ResiliencyCommunity PlanningComprehensive PlanThe EconomyEnergy and Greenhouse Gas EmissionsHousingMaps and DataNatural Resources and AgricultureCounty OperationsPlanning Department StaffSustainabilityTourismTransportationWater ResourcesEmail Planning and Sustainability DepartmentProbation and Community JusticeSub-menu
 
 Annual ReportsMandated ServicesCriminal Adult ServicesJuvenile ServicesGraduated ResponsesESSOSpecialized ProgramsVictim ServicesResourcesCareer OpportunitiesEmail Probation and Community Justice DepartmentTransparency HubRecycling & Materials ManagementSub-menu
 
@@ -309,8 +309,8 @@ Contact Us
 
 
 
-
-									             
+
+									             
 									            
 
 	In This Section
@@ -354,7 +354,7 @@ You may purchase permits, punch cards and coupons in person during business hou
 Permits and Fees Frequently Asked Questions
 Items Needed to Obtain a Permit Sticker in Person
 
-Your vehicle’s license plate number and your valid ID with a Tompkins County address;
+Your vehicle’s license plate number and your valid ID with a Tompkins County address;
 
 If your ID lists an address outside of the County, then proof of Tompkins County residency (electric bill, etc.) is also required.
 
@@ -443,10 +443,10 @@ $15
 
 Trucks/Altered Load/Other/Hauler
 Vehicle weighs in and out at the scales.
-3 Tier Flat Fees
-0-333 lbs: $15
-334-666 lbs: $30
-667-999 lbs: $45
+3 Tier Flat Fees
+0-333 lbs: $15
+334-666 lbs: $30
+667-999 lbs: $45
 1,000 lbs or greater: $96/ton
 
 
@@ -502,7 +502,7 @@ $300 per ton for 11 or more tires
 
 Category 1b Tires
 
-Rims accepted with tires.
+Rims accepted with tires.
 *20" Rim Size MAX
 
 
@@ -531,7 +531,7 @@ Limit: Up to 25 tires from Tires Category 1b
 
  Category 3 Tires
 
-Tires must be clean, dry, unfilled and uncut. No rims. 
+Tires must be clean, dry, unfilled and uncut. No rims. 
 *48" Rim Diameter MAX
 
 
@@ -587,7 +587,7 @@ Food Scraps Transport Container
 
 
 Recycling Bin
-18 gallon: $11
+18 gallon: $11
 22- 24 gallon: $14
 
 
@@ -611,8 +611,8 @@ $20 per check
 
 
 Uncovered Load
-$10: 1st Offense
-$20: 2nd Offense
+$10: 1st Offense
+$20: 2nd Offense
 $40: 3rd & Additional Offenses
 
 
@@ -683,17 +683,17 @@ Logo
 Share & Connect
  
 
-Like us on Facebook
+Like us on Facebook
 
 
 
 
-Connect on LinkedIn
+Connect on LinkedIn
 
 
 
 
-Live and Archived YouTube Videos
+Live and Archived YouTube Videos
 
 
 
@@ -701,59 +701,59 @@ Live and Archived YouTube Videos
 Quick Links
  
 
-Contact Us
+Contact Us
 
 
 
 
-Diversity Statement
+Diversity Statement
 
 
 
 
-County Intranet
+County Intranet
 
 
 
 
-Browse Photo Library
+Browse Photo Library
 
 
 
 
  
 
-About TompkinsCountyNY.gov
+About TompkinsCountyNY.gov
 
 
 
 
-Civil Rights
+Civil Rights
 
 
 
 
-Disclaimer and Privacy Policy
+Disclaimer and Privacy Policy
 
 
 
 
-FOIL
+FOIL
 
 
 
 
-Website Accessibility
+Website Accessibility
 
 
 
 
-Website Policies
+Website Policies
 
 
 
 
-Site Translation and Language Resources
+Site Translation and Language Resources
 
 
 
@@ -768,7 +768,7 @@ Site Translation and Language Resources
 Disclaimer & Privacy Policy | Website Policies | Sitemap | Non-Discrimination
 
 
-
+
                                     © 2025 Tompkins County | Powered by Granicus
 
 
