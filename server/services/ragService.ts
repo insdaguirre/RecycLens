@@ -30,6 +30,7 @@ export async function queryRAG(
   context: string = ''
 ): Promise<RAGQueryResponse | null> {
   const ragServiceUrl = process.env.RAG_SERVICE_URL;
+  const timeoutMs = Number(process.env.RAG_TIMEOUT_MS || 30000);
   
   // If RAG service URL is not configured, return null (graceful degradation)
   if (!ragServiceUrl) {
@@ -49,8 +50,8 @@ export async function queryRAG(
         condition: condition || '',
         context: context || '',
       }),
-      // Timeout after 10 seconds
-      signal: AbortSignal.timeout(10000),
+      // RAG can be slow on first request (index load + embeddings). Default to 30s.
+      signal: AbortSignal.timeout(timeoutMs),
     });
     
     if (!response.ok) {

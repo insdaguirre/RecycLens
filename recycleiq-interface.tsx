@@ -122,7 +122,7 @@ const RecycLens = () => {
               className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
             >
               <Recycle className="w-8 h-8 text-green-500" />
-              <span className="text-xl font-light tracking-tight">RecycLens</span>
+              <span className="text-xl font-light tracking-tight text-gray-900">RecycLens</span>
             </button>
             <div className="flex items-center space-x-8">
               <button

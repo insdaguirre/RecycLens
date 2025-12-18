@@ -127,7 +127,8 @@ export async function analyzeRecyclability(
 
     const ragServiceUrl = process.env.RAG_SERVICE_URL;
 
-    if (materialForRAG) {
+    // Only attempt RAG when it is configured. Otherwise, let the analysis fall back to web search.
+    if (materialForRAG && ragServiceUrl) {
       try {
         const ragResult = await queryRAG(materialForRAG, location, conditionForRAG, context);
         ragQueried = true;
@@ -140,7 +141,7 @@ export async function analyzeRecyclability(
         }
       } catch (error) {
         // Non-fatal: continue without ragContext
-        if (ragServiceUrl) ragQueried = true;
+        ragQueried = true;
         console.error('RAG query error (non-fatal):', error);
       }
     }
