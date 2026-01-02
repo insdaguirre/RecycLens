@@ -2,11 +2,10 @@
 
 An AI-powered recycling assistant that helps users identify recyclable items and find nearby recycling facilities using computer vision, RAG (Retrieval-Augmented Generation), and web search.
 
-## 🚀 Live Deployment
+## 🚀 UI
 
-**Try it now:** [https://recyclens-production.up.railway.app/](https://recyclens-production.up.railway.app/)
-
-The application is deployed on Railway and ready to use. Upload an image, enter your location, and get instant recycling guidance!
+The application is currently not deployed. However, an image of its front end is below for reference purposes. 
+![image of frontend](RecyLens_React_UI.png)
 
 ## Features
 
